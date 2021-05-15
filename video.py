@@ -47,7 +47,7 @@ def dhash(image):
 
 def phash(img):
     #加载并调整图片为32x32灰度图片
-    img = cv2.resize(img, (32, 32), interpolation=cv2.INTER_CUBIC)
+    img = cv2.resize(img, (8, 8), interpolation=cv2.INTER_CUBIC)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     img = img.astype(np.float32)
 #离散余弦变换
@@ -152,5 +152,5 @@ if flag == 1:
 
 print("finish!")  # 提取结束，打印finish
 
-with open("Temp\\2-phash.srt",'w+',encoding='utf-8') as q:
+with open("Temp\\2-phash-88.srt",'w+',encoding='utf-8') as q:
     q.write(srt)
