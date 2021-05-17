@@ -4,6 +4,8 @@ import shutil
 import numpy as np
 import difflib
 
+opening = ['1000011010001100010000000000000000000000000000000000000000000000','1100100000010000110010111001011101100100001000000001001011000001']
+
 def ahash(image):
     image = cv2.resize(image, (8,8), interpolation=cv2.INTER_CUBIC)
     gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
@@ -98,7 +100,7 @@ def frames_to_timecode(framerate,frames):
 
 
 # 利用VideoCapture捕获视频，这里使用本地视频
-cap = cv2.VideoCapture("Temp\\2.mp4")
+cap = cv2.VideoCapture("Temp\\冷冻.mp4")
 
 # 是否成功打开视频
 flag = 0
@@ -113,9 +115,12 @@ current_frame = 0
 last_pic_hash = ''
 last_frame = 0
 begin_frame = 0
-
+op = False
+opt = 0
 srt = ''
 num = 1
+
+phash_list = list()
 
 if flag == 1:
     while True:
@@ -127,17 +132,34 @@ if flag == 1:
 
         current_pic = frame[950:1045,810:910]
         pic_current_hash = phash(current_pic)
+        if(opt != 2):
+            match_op_pic = frame
+            match_op_hash = phash(match_op_pic)
+        if(match_op_hash in opening and opt != 2):
+            op = bool(1 - op)
+            opt += 1
+            print(str(current_frame) + " | " + match_op_hash)
+            srt = srt + str(num) + "\n"
+            srt = srt + frames_to_timecode(29.97,begin_frame) + " --> " + frames_to_timecode(29.97,current_frame) + "\n"
+            srt = srt + "op标记" + str(num) + "\n\n"
+            num += 1
+            begin_frame = current_frame
+        if(op):
+            current_frame += 1
+            continue
+
         # print(pic_current_hash)
         diff_rate = get_equal_rate(last_pic_hash, pic_current_hash)
         hmdistant = hamming_distance(last_pic_hash,pic_current_hash)
         # print(hmdistant)
 
-        # if((pic_current_hash != last_pic_hash) and (diff_rate < 0.8) and (current_frame != 0) and ((current_frame-last_frame) > 10) and not(current_frame in range(0,416))):
+        # # if((pic_current_hash != last_pic_hash) and (diff_rate < 0.8) and (current_frame != 0) and ((current_frame-last_frame) > 10) and not(current_frame in range(0,416))):
         if((pic_current_hash != last_pic_hash) and (hmdistant > 10) and (current_frame != 0) and ((current_frame-last_frame) > 10) and not(current_frame in range(0,0))):
             if(begin_frame == 0):
                 begin_frame = current_frame - 1
             # print("区间: "+frames_to_timecode(29.97,begin_frame)+" - "+frames_to_timecode(29.97,current_frame))
-            print(str(current_frame)+" : "+pic_current_hash+" | " +str(current_frame-1)+" : "+last_pic_hash+" | "+str(hmdistant)+" | diff: "+str(current_frame-last_frame)+" | Time: "+frames_to_timecode(29.97,current_frame-1))
+            # print(str(current_frame)+" : "+pic_current_hash+" | " +str(current_frame-1)+" : "+last_pic_hash+" | "+str(hmdistant)+" | diff: "+str(current_frame-last_frame)+" | Time: "+frames_to_timecode(29.97,current_frame-1))
+            print(str(current_frame)+" : "+pic_current_hash+" | " +str(current_frame-1)+" : "+last_pic_hash+" | "+str(hmdistant)+" | diff: "+str(current_frame-last_frame)+" | 区间: "+frames_to_timecode(29.97,begin_frame)+" - "+frames_to_timecode(29.97,current_frame))
             srt = srt + str(num) + "\n"
             srt = srt + frames_to_timecode(29.97,begin_frame) + " --> " + frames_to_timecode(29.97,current_frame) + "\n"
             srt = srt + "示范性字幕" + str(num) + "\n\n"
@@ -152,5 +174,6 @@ if flag == 1:
 
 print("finish!")  # 提取结束，打印finish
 
-with open("Temp\\2-phash-88.srt",'w+',encoding='utf-8') as q:
+
+with open("Temp\\冷冻.srt",'w+',encoding='utf-8') as q:
     q.write(srt)
