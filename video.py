@@ -6,19 +6,20 @@ import difflib
 
 opening = ['1000011010001100010000000000000000000000000000000000000000000000','1100100000010000110010111001011101100100001000000001001011000001']
 
+
 def ahash(image):
-    image = cv2.resize(image, (8,8), interpolation=cv2.INTER_CUBIC)
+    image = cv2.resize(image, (8, 8), interpolation=cv2.INTER_CUBIC)
     gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
     s = 0
     ahash_str = ''
     for i in range(8):
         for j in range(8):
-            s = s+gray[i,j]
+            s = s+gray[i, j]
     avg = s/64
     ahash_str = ''
     for i in range(8):
         for j in range(8):
-            if gray[i,j]>avg:
+            if gray[i, j] > avg:
                 ahash_str = ahash_str + '1'
             else:
                 ahash_str = ahash_str + '0'
@@ -30,20 +31,19 @@ def ahash(image):
 
 def dhash(image):
     # 将图片转化为8*8
-    image = cv2.resize(image,(9,8),interpolation=cv2.INTER_CUBIC )
+    image = cv2.resize(image, (9, 8), interpolation=cv2.INTER_CUBIC)
     # 将图片转化为灰度图
     gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
     dhash_str = ''
     for i in range(8):
         for j in range(8):
-            if gray[i,j]>gray[i, j+1]:
+            if gray[i, j] > gray[i, j+1]:
                 dhash_str = dhash_str + '1'
             else:
                 dhash_str = dhash_str + '0'
     result = ''
     for i in range(0, 64, 4):
-        result += ''.join('%x'%int(dhash_str[i: i+4],2))
-    # print("dhash值",result)
+        result += ''.join('%x' % int(dhash_str[i: i+4], 2))
     return result
 
 
@@ -52,7 +52,7 @@ def phash(img):
     img = cv2.resize(img, (8, 8), interpolation=cv2.INTER_CUBIC)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     img = img.astype(np.float32)
-#离散余弦变换
+    #离散余弦变换
     img = cv2.dct(img)
     img = img[0:8, 0:8]
     avg = 0
@@ -73,11 +73,12 @@ def phash(img):
 
 
 def get_equal_rate(str1, str2):
+    #字符相似度
     return difflib.SequenceMatcher(None, str1, str2).quick_ratio()
 
-#计算汉明距离
 
 def hamming_distance(str1, str2):
+    #计算汉明距离
     if len(str1) != len(str2):
         return 0
     count = 0
@@ -91,7 +92,7 @@ def frames_to_timecode(framerate,frames):
     视频 通过视频帧转换成时间
     :param framerate: 视频帧率
     :param frames: 当前视频帧数
-    :return:时间（00:00:01:01）
+    :return:时间（00:00:01.001）
     """
     return '{0:02d}:{1:02d}:{2:02d}.{3:02d}'.format(int(frames / (3600 * framerate)),
                                                     int(frames / (60 * framerate) % 60),
@@ -99,15 +100,14 @@ def frames_to_timecode(framerate,frames):
                                                     int(frames / framerate % 1 * 1000))
 
 
-# 利用VideoCapture捕获视频，这里使用本地视频
-cap = cv2.VideoCapture("Temp\\冷冻.mp4")
+
+source_video = cv2.VideoCapture("Temp\\鲸吞.mp4")
 
 # 是否成功打开视频
-flag = 0
-if cap.isOpened():
-    flag = 1
-else:
-    flag = 0
+isOpened = False
+if source_video.isOpened():
+    isOpened = True
+
 
 # 视频帧总数
 current_frame = 0
@@ -122,9 +122,9 @@ num = 1
 
 phash_list = list()
 
-if flag == 1:
+if isOpened:
     while True:
-        ret, frame = cap.read()
+        ret, frame = source_video.read()
         # 读取视频帧
         if ret == False:
             # 判断是否读取成功
@@ -157,8 +157,6 @@ if flag == 1:
         if((pic_current_hash != last_pic_hash) and (hmdistant > 10) and (current_frame != 0) and ((current_frame-last_frame) > 10) and not(current_frame in range(0,0))):
             if(begin_frame == 0):
                 begin_frame = current_frame - 1
-            # print("区间: "+frames_to_timecode(29.97,begin_frame)+" - "+frames_to_timecode(29.97,current_frame))
-            # print(str(current_frame)+" : "+pic_current_hash+" | " +str(current_frame-1)+" : "+last_pic_hash+" | "+str(hmdistant)+" | diff: "+str(current_frame-last_frame)+" | Time: "+frames_to_timecode(29.97,current_frame-1))
             print(str(current_frame)+" : "+pic_current_hash+" | " +str(current_frame-1)+" : "+last_pic_hash+" | "+str(hmdistant)+" | diff: "+str(current_frame-last_frame)+" | 区间: "+frames_to_timecode(29.97,begin_frame)+" - "+frames_to_timecode(29.97,current_frame))
             srt = srt + str(num) + "\n"
             srt = srt + frames_to_timecode(29.97,begin_frame) + " --> " + frames_to_timecode(29.97,current_frame) + "\n"
@@ -175,5 +173,5 @@ if flag == 1:
 print("finish!")  # 提取结束，打印finish
 
 
-with open("Temp\\冷冻.srt",'w+',encoding='utf-8') as q:
+with open("Temp\\鲸吞.srt",'w+',encoding='utf-8') as q:
     q.write(srt)
