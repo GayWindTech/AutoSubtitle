@@ -34,6 +34,18 @@ def get_equal_rate(str1, str2):
     #字符相似度
     return difflib.SequenceMatcher(None, str1, str2).quick_ratio()
 
+def get_color_rate(frame,lower_blue,upper_blue):
+    lower_blue=np.array([100,130,216])
+    upper_blue=np.array([110,255,255])
+    # frame = cv2.imread("D:\\Code\\AutoSubtitle\\Temp\\3.jpg")[950:1045,810:910]
+    hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+    mask = cv2.inRange(hsv, lower_blue, upper_blue)
+    # res = cv2.bitwise_and(frame, frame, mask=mask)
+    ratio_green = cv2.countNonZero(mask)/(frame.size/3)
+    colorPercent = (ratio_green * 100)
+    # print('green pixel percentage:', np.round(colorPercent, 2))
+    return np.round(colorPercent, 2)
+
 def hamming_distance(str1, str2):
     #计算汉明距离
     if len(str1) != len(str2):
@@ -80,6 +92,7 @@ if isOpened:
 
         current_pic = frame[950:1045,810:910]
         pic_current_hash = phash(current_pic)
+        get_color_rate(frame,0,0)
         if(opt != 2):
             match_op_pic = frame
             match_op_hash = phash(match_op_pic)
