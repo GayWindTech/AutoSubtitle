@@ -6,47 +6,6 @@ import difflib
 
 opening = ['1000011010001100010000000000000000000000000000000000000000000000','1100100000010000110010111001011101100100001000000001001011000001']
 
-
-def ahash(image):
-    image = cv2.resize(image, (8, 8), interpolation=cv2.INTER_CUBIC)
-    gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
-    s = 0
-    ahash_str = ''
-    for i in range(8):
-        for j in range(8):
-            s = s+gray[i, j]
-    avg = s/64
-    ahash_str = ''
-    for i in range(8):
-        for j in range(8):
-            if gray[i, j] > avg:
-                ahash_str = ahash_str + '1'
-            else:
-                ahash_str = ahash_str + '0'
-    result = ''
-    for i in range(0, 64, 4):
-        result += ''.join('%x' % int(ahash_str[i: i+4], 2))
-    return result
-
-
-def dhash(image):
-    # 将图片转化为8*8
-    image = cv2.resize(image, (9, 8), interpolation=cv2.INTER_CUBIC)
-    # 将图片转化为灰度图
-    gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
-    dhash_str = ''
-    for i in range(8):
-        for j in range(8):
-            if gray[i, j] > gray[i, j+1]:
-                dhash_str = dhash_str + '1'
-            else:
-                dhash_str = dhash_str + '0'
-    result = ''
-    for i in range(0, 64, 4):
-        result += ''.join('%x' % int(dhash_str[i: i+4], 2))
-    return result
-
-
 def phash(img):
     #加载并调整图片为32x32灰度图片
     img = cv2.resize(img, (8, 8), interpolation=cv2.INTER_CUBIC)
@@ -71,11 +30,9 @@ def phash(img):
                 hash_str = hash_str+'0'
     return hash_str
 
-
 def get_equal_rate(str1, str2):
     #字符相似度
     return difflib.SequenceMatcher(None, str1, str2).quick_ratio()
-
 
 def hamming_distance(str1, str2):
     #计算汉明距离
@@ -88,30 +45,18 @@ def hamming_distance(str1, str2):
     return count
 
 def frames_to_timecode(framerate,frames):
-    """
-    视频 通过视频帧转换成时间
-    :param framerate: 视频帧率
-    :param frames: 当前视频帧数
-    :return:时间（00:00:01.001）
-    """
+    # 视频 通过视频帧转换成时间|framerate: 视频帧率|frames: 当前视频帧数|return:时间（00:00:01.001）
     return '{0:02d}:{1:02d}:{2:02d}.{3:02d}'.format(int(frames / (3600 * framerate)),
                                                     int(frames / (60 * framerate) % 60),
                                                     int(frames / framerate % 60),
                                                     int(frames / framerate % 1 * 1000))
 
 
-
 source_video = cv2.VideoCapture("Temp\\鲸吞.mp4")
-
-# 是否成功打开视频
-isOpened = False
-if source_video.isOpened():
-    isOpened = True
 
 
 # 视频帧总数
 current_frame = 0
-
 last_pic_hash = ''
 last_frame = 0
 begin_frame = 0
@@ -120,7 +65,10 @@ opt = 0
 srt = ''
 num = 1
 
-phash_list = list()
+# 是否成功打开视频
+isOpened = False
+if source_video.isOpened():
+    isOpened = True
 
 if isOpened:
     while True:
