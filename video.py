@@ -34,12 +34,11 @@ def get_equal_rate(str1, str2):
     #字符相似度
     return difflib.SequenceMatcher(None, str1, str2).quick_ratio()
 
-def get_color_rate(frame,lower_blue,upper_blue):
-    lower_blue=np.array([100,130,216])
-    upper_blue=np.array([110,255,255])
-    # frame = cv2.imread("D:\\Code\\AutoSubtitle\\Temp\\3.jpg")[950:1045,810:910]
+def get_color_rate(frame,lower,upper):
+    # lower=np.array([100,130,216])
+    # upper=np.array([110,255,255])
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-    mask = cv2.inRange(hsv, lower_blue, upper_blue)
+    mask = cv2.inRange(hsv, lower, upper)
     # res = cv2.bitwise_and(frame, frame, mask=mask)
     ratio_green = cv2.countNonZero(mask)/(frame.size/3)
     colorPercent = (ratio_green * 100)
@@ -56,6 +55,15 @@ def hamming_distance(str1, str2):
             count += 1
     return count
 
+def isset(v): 
+    try : 
+        type (eval(v)) 
+    except : 
+        return  0  
+    else : 
+        return  1  
+
+
 def frames_to_timecode(framerate,frames):
     # 视频 通过视频帧转换成时间|framerate: 视频帧率|frames: 当前视频帧数|return:时间（00:00:01.001）
     return '{0:02d}:{1:02d}:{2:02d}.{3:02d}'.format(int(frames / (3600 * framerate)),
@@ -63,8 +71,19 @@ def frames_to_timecode(framerate,frames):
                                                     int(frames / framerate % 60),
                                                     int(frames / framerate % 1 * 1000))
 
+def get_people(img):
+    mobuo_rate = get_color_rate(img,np.array([100,130,216]),np.array([110,255,255]))
+    flag_rate = get_color_rate(img,np.array([30,140,240]),np.array([40,220,255]))
+    if(mobuo_rate > 1):
+        # print("mobuo")
+        return "mobuo"
+    elif(flag_rate > 1):
+        # print("flag")
+        return "flag"
+    else:
+        return "未定义"
 
-source_video = cv2.VideoCapture("Temp\\鲸吞.mp4")
+source_video = cv2.VideoCapture("Temp\\冷冻.mp4")
 
 
 # 视频帧总数
@@ -92,7 +111,6 @@ if isOpened:
 
         current_pic = frame[950:1045,810:910]
         pic_current_hash = phash(current_pic)
-        get_color_rate(frame,0,0)
         if(opt != 2):
             match_op_pic = frame
             match_op_hash = phash(match_op_pic)
@@ -118,10 +136,12 @@ if isOpened:
         if((pic_current_hash != last_pic_hash) and (hmdistant > 10) and (current_frame != 0) and ((current_frame-last_frame) > 10) and not(current_frame in range(0,0))):
             if(begin_frame == 0):
                 begin_frame = current_frame - 1
+                pic = current_pic
+            people = get_people(pic)
             print(str(current_frame)+" : "+pic_current_hash+" | " +str(current_frame-1)+" : "+last_pic_hash+" | "+str(hmdistant)+" | diff: "+str(current_frame-last_frame)+" | 区间: "+frames_to_timecode(29.97,begin_frame)+" - "+frames_to_timecode(29.97,current_frame))
             srt = srt + str(num) + "\n"
             srt = srt + frames_to_timecode(29.97,begin_frame) + " --> " + frames_to_timecode(29.97,current_frame) + "\n"
-            srt = srt + "示范性字幕" + str(num) + "\n\n"
+            srt = srt + "示范性字幕" + str(num) + people + "\n\n"
             num += 1
             begin_frame = current_frame
             last_frame = current_frame
@@ -134,5 +154,5 @@ if isOpened:
 print("finish!")  # 提取结束，打印finish
 
 
-with open("Temp\\鲸吞.srt",'w+',encoding='utf-8') as q:
+with open("Temp\\冷冻.srt",'w+',encoding='utf-8') as q:
     q.write(srt)
