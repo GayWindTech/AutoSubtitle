@@ -68,29 +68,30 @@ def frames_to_timecode(framerate,frames):
                                                     int(frames / framerate % 1 * 1000))
 
 def get_people(img):
-    mobuo_rate = get_color_rate(img,np.array([100,130,216]),np.array([110,255,255]))
-    flag_rate = get_color_rate(img,np.array([30,140,240]),np.array([40,220,255]))
-    if(mobuo_rate > 1):
+    mobuo_rate = get_color_rate(img,np.array([100,185,225]),np.array([110,225,255]))
+    flag_rate = get_color_rate(img,np.array([27,155,240]),np.array([37,215,255]))
+    if(mobuo_rate > 0.2):
         # print("mobuo")
         return "mobuo"
-    elif(flag_rate > 1):
+    elif(flag_rate > 0.2):
         # print("flag")
         return "flag"
     else:
         return "未定义"
 
-source_video = cv2.VideoCapture("Temp\\大好.mp4")
+source_video = cv2.VideoCapture("Temp\\z.mp4")
 
 
 # 视频帧总数
-current_frame = 0
+current_frame_num = 0
 last_pic_hash = ''
 last_frame = 0
-begin_frame = 0
+begin_frame_num = 0
 op = False
-opt = 0
+op_match_times = 0
 srt = ''
 num = 1
+switch = False
 
 # 是否成功打开视频
 isOpened = False
@@ -100,53 +101,70 @@ if source_video.isOpened():
 if isOpened:
     while True:
         ret, frame = source_video.read()
-        # 读取视频帧
         if ret == False:
-            # 判断是否读取成功
             break
 
         current_pic = frame[950:1045,810:910]
         pic_current_hash = phash(current_pic)
-        if(opt != 2):
+        if(op_match_times < 2):
             match_op_pic = frame
             match_op_hash = phash(match_op_pic)
-        if(match_op_hash in opening and opt != 2):
+        if(match_op_hash in opening and op_match_times < 2):
             op = bool(1 - op)
-            opt += 1
-            print(str(current_frame) + " | " + match_op_hash)
+            op_match_times += 1
+            print(str(current_frame_num) + " | " + match_op_hash)
             srt = srt + str(num) + "\n"
-            srt = srt + frames_to_timecode(24,begin_frame) + " --> " + frames_to_timecode(24,current_frame) + "\n"
+            srt = srt + frames_to_timecode(24,begin_frame_num) + " --> " + frames_to_timecode(24,current_frame_num) + "\n"
             srt = srt + "op标记" + str(num) + "\n\n"
             num += 1
-            begin_frame = current_frame
+            begin_frame_num = current_frame_num
         if(op):
-            current_frame += 1
+            current_frame_num += 1
             continue
-
-        # print(pic_current_hash)
+            
+            
         hmdistant = hamming_distance(last_pic_hash,pic_current_hash)
-        # print(hmdistant)
+            
+        if(current_frame_num == 0):
+            people_hash = people_pic = frame[940:1060,360:1540]
+        if(people_hash == '1010010011000000101010001100000001000100000001011000011010100000'):
+            switch = True
+            # cv2.imshow("zc",people_pic)
+            # cv2.waitKey(0)
 
-        if((pic_current_hash != last_pic_hash) and (hmdistant > 10) and (current_frame != 0) and ((current_frame-last_frame) > 5) and not(current_frame in range(0,0))):
-            if(begin_frame == 0):
-                begin_frame = current_frame - 1
-                pic = current_pic
-            people = get_people(pic)
-            print(str(current_frame)+" : "+pic_current_hash+" | " +str(current_frame-1)+" : "+last_pic_hash+" | "+str(hmdistant)+" | diff: "+str(current_frame-last_frame)+" | 区间: "+frames_to_timecode(24,begin_frame)+" - "+frames_to_timecode(24,current_frame))
+
+        if((pic_current_hash != last_pic_hash) and (hmdistant > 10) and (current_frame_num != 0) and ((current_frame_num-last_frame) > 5)):
+            if(begin_frame_num == 0):
+                frame_rate = round(source_video.get(5),2)
+                begin_frame_num = current_frame_num - 1
+                people_pic = frame[940:1060,360:1540]
+                people_hash = phash(people_pic)
+
+            people = get_people(people_pic)
+            if(switch):
+                people = "转场"
+                switch = False
+
+            # print(str(current_frame_num)+" : "+pic_current_hash+" | " +str(current_frame_num-1)+" : "+last_pic_hash+" | "+str(hmdistant)+" | gap: "+str(current_frame_num-last_frame)+" | 区间: "+frames_to_timecode(24,begin_frame_num)+" - "+frames_to_timecode(24,current_frame_num))
+            print(str(current_frame_num) + " --> " + str(current_frame_num-1) + " | hmdst: " + str(hmdistant)+" | gap: "+str(current_frame_num-last_frame)+" | "+frames_to_timecode(frame_rate,begin_frame_num)+" --> "+frames_to_timecode(frame_rate,current_frame_num) + " | people: " + people)
             srt = srt + str(num) + "\n"
-            srt = srt + frames_to_timecode(24,begin_frame) + " --> " + frames_to_timecode(24,current_frame) + "\n"
+            srt = srt + frames_to_timecode(frame_rate,begin_frame_num) + " --> " + frames_to_timecode(frame_rate,current_frame_num) + "\n"
             srt = srt + "示范性字幕" + str(num) + people + "\n\n"
             num += 1
-            begin_frame = current_frame
-            last_frame = current_frame
+            
+            begin_frame_num = current_frame_num
+            last_frame = current_frame_num
             
         last_pic_hash = pic_current_hash
-        pic = current_pic
-        current_frame += 1
+        people_pic = frame[940:1060,360:1540]
+        people_hash = phash(people_pic)
+        current_frame_num += 1
 
 
-print("finish!")  # 提取结束，打印finish
+print("finish!")
 
 
-with open("Temp\\大好.srt",'w+',encoding='utf-8') as q:
+
+
+with open("Temp\\z.srt",'w+',encoding='utf-8') as q:
     q.write(srt)
