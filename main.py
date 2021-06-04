@@ -142,11 +142,20 @@ def autosub(videopath,subpath):
                 match_op_pic = frame
                 match_op_hash = phash(match_op_pic)
             if(match_op_hash in opening and op_match_times < 2):
+                # print(str(current_frame_num) + " | " + match_op_hash)
+                # add_sub("OP标记",frames_to_timecode(frame_rate,begin_frame_num),frames_to_timecode(frame_rate,current_frame_num),"OP标记")
+                if(op_match_times == 0):
+                    print(str(current_frame_num) + " | 开场白起点")
+                    add_sub("没有任何优点的路人男",frames_to_timecode(frame_rate,begin_frame_num),frames_to_timecode(frame_rate,begin_frame_num+43),"OP")
+                    add_sub("在路人男面前出现的女孩，她的真实身份是...?",frames_to_timecode(frame_rate,begin_frame_num+43),frames_to_timecode(frame_rate,begin_frame_num+105),"OP")
+                    add_sub("死亡flag?",frames_to_timecode(frame_rate,begin_frame_num+105),frames_to_timecode(frame_rate,begin_frame_num+142),"OP")
+                    add_sub("路人男能成功回避死亡flag吗!?",frames_to_timecode(frame_rate,begin_frame_num+142),frames_to_timecode(frame_rate,begin_frame_num+198),"OP")
+                    add_sub("全力回避flag酱!",frames_to_timecode(frame_rate,begin_frame_num+198),frames_to_timecode(frame_rate,begin_frame_num+254),"OP")
                 op = bool(1 - op)
                 op_match_times += 1
-                print(str(current_frame_num) + " | " + match_op_hash)
-                add_sub("OP标记",frames_to_timecode(frame_rate,begin_frame_num),frames_to_timecode(frame_rate,current_frame_num),"OP标记")
-                begin_frame_num = current_frame_num
+                if(op_match_times == 2):
+                    print(str(current_frame_num) + " | 开场白结束")
+                begin_frame_num = current_frame_num + 15
             if(op):
                 current_frame_num += 1
                 continue
@@ -156,7 +165,7 @@ def autosub(videopath,subpath):
             #识别转场
             
             if((pic_current_hash != last_pic_hash) and (hmdistant > 10) and (current_frame_num != 0) and ((current_frame_num-last_frame_num) > 5)):
-            
+                
                 people = get_people(people_pic)
                 if(switch):
                     people = "转场"
