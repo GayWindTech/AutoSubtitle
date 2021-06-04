@@ -30,10 +30,6 @@ def phash(img):
                 hash_str = hash_str+'0'
     return hash_str
 
-def get_equal_rate(str1, str2):
-    #字符相似度
-    return difflib.SequenceMatcher(None, str1, str2).quick_ratio()
-
 def get_color_rate(frame,lower,upper):
     # lower=np.array([100,130,216])
     # upper=np.array([110,255,255])
@@ -128,11 +124,9 @@ if isOpened:
             continue
 
         # print(pic_current_hash)
-        diff_rate = get_equal_rate(last_pic_hash, pic_current_hash)
         hmdistant = hamming_distance(last_pic_hash,pic_current_hash)
         # print(hmdistant)
 
-        # # if((pic_current_hash != last_pic_hash) and (diff_rate < 0.8) and (current_frame != 0) and ((current_frame-last_frame) > 10) and not(current_frame in range(0,416))):
         if((pic_current_hash != last_pic_hash) and (hmdistant > 10) and (current_frame != 0) and ((current_frame-last_frame) > 5) and not(current_frame in range(0,0))):
             if(begin_frame == 0):
                 begin_frame = current_frame - 1
