@@ -193,11 +193,13 @@ if(len(sys.argv) == 3):
     autosub(sys.argv[1],sys.argv[2])
 elif(len(sys.argv) == 2 and (sys.argv[1] == "-h" or sys.argv[1] == "--help")):
     print("----------------")
-    print("使用帮助：")
+    print("使用帮助：\n")
     print("python main.py 参数1 参数2")
+    print("或：autosub.exe 参数1 参数2 \n")
     print("参数1 原视频路径 如 C://xxx/xxx/xx.mp4")
-    print("参数2 字幕输出路径 如 C://xxx/xxx/xx.srt")
+    print("参数2 字幕输出路径 如 C://xxx/xxx/xx.srt \n")
     print("完整示例：python main.py C://xxx/xxx/xx.mp4 C://xxx/xxx/xx.srt")
+    print("或：autosub.exe C://xxx/xxx/xx.mp4 C://xxx/xxx/xx.srt")
     print("----------------")
 elif(len(sys.argv) < 3):
     print("参数过少，请检查重试，输入 -h 或 --help 来查看使用帮助")
