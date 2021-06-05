@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import cv2
+import time
 import sys
 import numpy as np
 
@@ -185,11 +186,12 @@ def autosub(videopath,subpath):
     with open(subpath,'w+',encoding='utf-8') as q:
         q.write(srt)
 
-# autosub("Temp\\4.mp4","Temp\\4.srt")
 
 if(len(sys.argv) == 3):
-    # print(sys.argv[1])
+    start = time.time()
     autosub(sys.argv[1],sys.argv[2])
+    end = time.time()
+    print('耗时：'+str(end - start)+'秒')
 elif(len(sys.argv) == 2 and (sys.argv[1] == "-h" or sys.argv[1] == "--help")):
     print("----------------")
     print("使用帮助：\n")
