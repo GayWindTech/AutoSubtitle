@@ -201,7 +201,10 @@ elif(len(sys.argv) == 2 and (sys.argv[1] == "-h" or sys.argv[1] == "--help")):
     print("完整示例：python main.py C://xxx/xxx/xx.mp4 C://xxx/xxx/xx.srt")
     print("或：autosub.exe C://xxx/xxx/xx.mp4 C://xxx/xxx/xx.srt")
     print("----------------")
+    input("按回车退出...")
 elif(len(sys.argv) < 3):
     print("参数过少，请检查重试，输入 -h 或 --help 来查看使用帮助")
+    input("按回车退出...")
 elif(len(sys.argv) > 3):
     print("参数过多，请检查重试，输入 -h 或 --help 来查看使用帮助")
+    input("按回车退出...")
