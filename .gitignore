@@ -5,5 +5,5 @@ test
 __pycache__
 build
 dist
-main.spec
+*.spec
 C
