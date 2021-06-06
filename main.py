@@ -3,6 +3,7 @@ import cv2
 import time
 import sys
 import numpy as np
+import easygui as eg
 
 opening = ['1000011010001100010000000000000000000000000000000000000000000000','1100100000010000110010111001011101100100001000000001001011000001']
 
@@ -96,9 +97,10 @@ last_pic_hash = srt = ''
 op = switch = False
 op_match_times = 0
 sub_num = 1
-
+Err = False
 
 def autosub(videopath,subpath):
+    start = time.time()
     global op_match_times
     global op
     global switch
@@ -114,7 +116,8 @@ def autosub(videopath,subpath):
     global people_pic
     global people_hash
     global people
-    
+    global Err
+
     # source_video = cv2.VideoCapture("Temp\\大好.mp4")
     source_video = cv2.VideoCapture(videopath)
     # 是否成功打开视频
@@ -182,28 +185,96 @@ def autosub(videopath,subpath):
             people_pic = frame[940:1060,360:1540]
             people_hash = phash(people_pic)
             current_frame_num += 1
+    else:
+        print("源视频读取出错")
+        Err = True
     print("finish!")
-    with open(subpath,'w+',encoding='utf-8') as q:
-        q.write(srt)
-
-
-if(len(sys.argv) == 3):
-    start = time.time()
-    autosub(sys.argv[1],sys.argv[2])
+    if(not Err):
+        with open(subpath,'w+',encoding='utf-8') as q:
+            q.write(srt)
     end = time.time()
     print('耗时：'+str(end - start)+'秒')
-elif(len(sys.argv) == 2 and (sys.argv[1] == "-h" or sys.argv[1] == "--help")):
+    return Err
+
+
+def gui():
+    print("正在呼起GUI...请稍后...")
+    source_path_input = ""
+    target_path_input = ""
+    while(1):
+        choose = eg.indexbox("\t\t\t     "+ "自动打轴机 By Yellowstone\n\n\t\t\t 请选择源视频文件与轴文件输出路径\n\n源视频路径：" + source_path_input + "\n\n轴文件输出路径：" + target_path_input,"AutoSubtitle",choices=("选择源视频","选择轴输出路径","开始打轴","退出程序"))
+        if(choose == 0):
+            while(1):
+                s = eg.fileopenbox("请选择源视频","AutoSubtitle",default="*.mp4",filetypes=[["*.webm","*.mp4","*.mov","*.flv","*.mkv","*.m4v","Video files"],["*.*","All files"]],multiple=False)
+                if(s is None):
+                    # eg.msgbox("您未选择任何源文件！","未选择文件","重新选择")
+                    if(eg.ccbox("\t\t\t您未选择任何文件，是否重新选择？",title="未选择文件",choices=("重新选择","稍后选择"))):
+                        pass
+                    else:
+                        break
+                elif(not (s.split('.')[-1] in ["webm","mp4","mov","flv","mkv","m4v"])):
+                    if(eg.ccbox("\t\t   您选择的文件疑似非视频文件，是否重新选择？",title="文件格式未识别",choices=("重新选择","选择无误"))):
+                        pass
+                    else:
+                        source_path_input = s
+                        break
+                else:
+                    source_path_input = s
+                    break
+        elif(choose == 1):
+            while(1):
+                t = eg.filesavebox("请选择轴保存路径","AutoSubtitle",default="output.srt",filetypes=[["*.srt","SRT files"],["*.*","All files"]])
+                if(t is None):
+                    if(eg.ccbox("\t\t\t您未选择保存路径，是否重新选择？",title="未选择保存路径",choices=("重新选择","稍后选择"))):
+                        pass
+                    else:
+                        break
+                elif(t.split('\\')[-1].split('.')[-1] != 'srt'):
+                    target_path_input = t + ".srt"
+                    break
+                else:
+                    target_path_input = t
+                    break
+        elif(choose == 2):
+            # break
+            if(not source_path_input or not source_path_input):
+                eg.msgbox("\t\t\t    信息有误，请补充相关信息！","AutoSubtitle","确认")
+                continue
+            if(autosub(source_path_input,target_path_input)):
+                eg.msgbox("\t\t\t打轴失败，请检查相关信息或报告错误！","AutoSubtitle","确认")
+                continue
+            else:
+                input("按回车退出...")
+                break
+        elif(choose == 3):
+            break
+        else:
+            break
+
+# gui()
+
+def show_help():
     print("----------------")
     print("使用帮助：\n")
+    print("GUI模式触发条件为无传入参数\n")
+    print("命令行模式：")
     print("python main.py 参数1 参数2")
-    print("或：autosub.exe 参数1 参数2 \n")
+    print("AutoSubtitle.exe 参数1 参数2 \n")
     print("参数1 原视频路径 如 C://xxx/xxx/xx.mp4")
     print("参数2 字幕输出路径 如 C://xxx/xxx/xx.srt \n")
     print("完整示例：python main.py C://xxx/xxx/xx.mp4 C://xxx/xxx/xx.srt")
-    print("或：autosub.exe C://xxx/xxx/xx.mp4 C://xxx/xxx/xx.srt")
+    print("AutoSubtitle.exe C://xxx/xxx/xx.mp4 C://xxx/xxx/xx.srt")
     print("----------------")
     input("按回车退出...")
-elif(len(sys.argv) < 3):
+
+if(len(sys.argv) == 3):
+    if(autosub(sys.argv[1],sys.argv[2])):
+        print()
+elif(len(sys.argv) == 1):
+    gui()
+elif(len(sys.argv) == 2 and (sys.argv[1] == "-h" or sys.argv[1] == "--help")):
+    show_help()
+elif(len(sys.argv) < 3 and len(sys.argv) > 1):
     print("参数过少，请检查重试，输入 -h 或 --help 来查看使用帮助")
     input("按回车退出...")
 elif(len(sys.argv) > 3):
