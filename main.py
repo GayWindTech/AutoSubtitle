@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import cv2
 import time
+import os
 import sys
 import numpy as np
 import easygui as eg
@@ -70,18 +71,14 @@ def get_people(img):
     renai_rate = get_color_rate(img,np.array([150,70,225]),np.array([160,90,255]))
     seizon_rate = get_color_rate(img,np.array([75,150,230]),np.array([80,190,255]))
     mobumi_rate = get_color_rate(img,np.array([20,90,245]),np.array([25,120,255]))
-    if(mobuo_rate > 0.2):
-        return "mobuo"
-    elif(flag_rate > 0.2):
-        return "flag"
-    elif(renai_rate > 0.2):
-        return "renai"
-    elif(seizon_rate > 0.2):
-        return "seizon"
-    elif(mobumi_rate > 0.2):
-        return "mobumi"
-    else:
+    rate_list = [mobuo_rate,flag_rate,renai_rate,seizon_rate,mobumi_rate]
+    people_list = ["mobuo","flag","renai","seizon","mobumi"]
+    max_rate = max(rate_list)
+    if(max_rate < 0.2 or rate_list.count(max_rate) > 1):
+        # print(people_list)
+        # print(rate_list)
         return "undefined"
+    return people_list[rate_list.index(max_rate)]
 
 subtitle_head = """
 [Script Info]
@@ -96,10 +93,8 @@ PlayResX: 1920
 PlayResY: 1080
 
 [Aegisub Project Garbage]
-Video Zoom Percent: 0.375000
-Scroll Position: 651
-Active Line: 665
-Video Position: 15998
+Audio File: $$FILE$$
+Video File: $$FILE$$
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
@@ -162,11 +157,18 @@ def add_sub(subtext,begintime,endingtime,subpeople):
     subtitle = subtitle + "Dialogue: 1,"+ begintime +","+ endingtime +","+ style +","+ subpeople +",0,0,0,," + subtext + str(sub_num) + "\n"
     sub_num += 1
 
+def add_op(frame_rate,begin_frame_num):
+    add_sub("没有任何优点的路人男",frames_to_timecode(frame_rate,begin_frame_num),frames_to_timecode(frame_rate,begin_frame_num+(1.87*frame_rate)),"Opening")
+    add_sub("在路人男面前出现的女孩，她的真实身份是...?",frames_to_timecode(frame_rate,begin_frame_num+(1.87*frame_rate)),frames_to_timecode(frame_rate,begin_frame_num+(4.57*frame_rate)),"Opening")
+    add_sub("死亡flag?",frames_to_timecode(frame_rate,begin_frame_num+(4.57*frame_rate)),frames_to_timecode(frame_rate,begin_frame_num+(5.77*frame_rate)),"Opening")
+    add_sub("路人男能成功回避死亡flag吗!?",frames_to_timecode(frame_rate,begin_frame_num+(5.77*frame_rate)),frames_to_timecode(frame_rate,begin_frame_num+(8.47*frame_rate)),"Opening")
+    add_sub("全力回避flag酱!",frames_to_timecode(frame_rate,begin_frame_num+(8.47*frame_rate)),frames_to_timecode(frame_rate,begin_frame_num+(10.84*frame_rate)),"Opening")
+
+
 # 视频帧总数
 current_frame_num = begin_frame_num = last_frame_num = 0
 last_pic_hash = ''
-subtitle = subtitle_head
-op = switch = False
+op = trans = False
 op_match_times = 0
 sub_num = 1
 Err = False
@@ -175,7 +177,7 @@ def autosub(videopath,subpath):
     start = time.time()
     global op_match_times
     global op
-    global switch
+    global trans
     global last_pic_hash
     global current_frame_num
     global begin_frame_num
@@ -189,20 +191,17 @@ def autosub(videopath,subpath):
     global people_hash
     global people
     global Err
-
-    # source_video = cv2.VideoCapture("Temp\\大好.mp4")
+    subtitle = subtitle_head.replace("$$FILE$$",os.path.abspath(videopath))
     source_video = cv2.VideoCapture(videopath)
     # 是否成功打开视频
     isOpened = False
     if source_video.isOpened():
         isOpened = True
-    
     if isOpened:
         while True:
             ret, frame = source_video.read()
             if ret == False:
                 break
-            
             if(current_frame_num == 0):
                 frame_rate = round(source_video.get(5),2)
             
@@ -217,42 +216,35 @@ def autosub(videopath,subpath):
                 match_op_pic = frame
                 match_op_hash = phash(match_op_pic)
             if(match_op_hash in opening and op_match_times < 2):
-                # print(str(current_frame_num) + " | " + match_op_hash)
-                # add_sub("OP标记",frames_to_timecode(frame_rate,begin_frame_num),frames_to_timecode(frame_rate,current_frame_num),"OP标记")
                 if(op_match_times == 0):
-                    print(str(current_frame_num) + " | 开场白起点")
-                    add_sub("没有任何优点的路人男",frames_to_timecode(frame_rate,begin_frame_num),frames_to_timecode(frame_rate,begin_frame_num+(1.87*frame_rate)),"Opening")
-                    add_sub("在路人男面前出现的女孩，她的真实身份是...?",frames_to_timecode(frame_rate,begin_frame_num+(1.87*frame_rate)),frames_to_timecode(frame_rate,begin_frame_num+(4.57*frame_rate)),"Opening")
-                    add_sub("死亡flag?",frames_to_timecode(frame_rate,begin_frame_num+(4.57*frame_rate)),frames_to_timecode(frame_rate,begin_frame_num+(5.37*frame_rate)),"Opening")
-                    add_sub("路人男能成功回避死亡flag吗!?",frames_to_timecode(frame_rate,begin_frame_num+(5.37*frame_rate)),frames_to_timecode(frame_rate,begin_frame_num+(8.47*frame_rate)),"Opening")
-                    add_sub("全力回避flag酱!",frames_to_timecode(frame_rate,begin_frame_num+(8.47*frame_rate)),frames_to_timecode(frame_rate,begin_frame_num+(10.84*frame_rate)),"Opening")
+                    # print(str(current_frame_num) + " | 开场白起点")
+                    op_bg_num = current_frame_num
+                    add_op(frame_rate,begin_frame_num)
                 op = bool(1 - op)
                 op_match_times += 1
                 if(op_match_times == 2):
-                    print(str(current_frame_num) + " | 开场白结束")
+                    # print(str(current_frame_num) + " | 开场白结束")
+                    print(str(op_bg_num) + " <-> " + str(current_frame_num) + " | 开场白")
                 begin_frame_num = current_frame_num + 15
             if(op):
                 current_frame_num += 1
                 continue
             
             if(hamming_distance(switch_hash,'1010010011000000101010001100000001000100000001011000011010100000') < 10):
-                switch = True
-            #识别转场
-            
-            if((pic_current_hash != last_pic_hash) and (hmdistant > 10) and (current_frame_num != 0) and ((current_frame_num-last_frame_num) > 5)):
-                
+                trans = True   #识别转场
+            if((hmdistant > 13) and (current_frame_num != 0)):
                 people = get_people(people_pic)
-                if(switch):
+                if(trans):
                     people = "trans"
-                    switch = False
+                    trans = False
                 
-                print(str(current_frame_num-1) + " <-> " + str(current_frame_num) + " | hmdst: " + str(hmdistant)+" | gap: "+str(current_frame_num-last_frame_num)+" | "+frames_to_timecode(frame_rate,begin_frame_num)+" --> "+frames_to_timecode(frame_rate,current_frame_num) + " | people: " + people)
-                
+                print(str(sub_num) + " | " + str(current_frame_num-1) + " <-> " + str(current_frame_num) + " | hmdst: " + str(hmdistant)+" | gap: "+str(current_frame_num-last_frame_num) +
+                        " | "+frames_to_timecode(frame_rate, begin_frame_num)+" --> "+frames_to_timecode(frame_rate, current_frame_num) + " | people: " + people)
                 add_sub("示范性字幕",frames_to_timecode(frame_rate,begin_frame_num),frames_to_timecode(frame_rate,current_frame_num),people)
-                
+
                 begin_frame_num = current_frame_num
                 last_frame_num = current_frame_num
-            
+
             last_pic_hash = pic_current_hash
             people_pic = frame[940:1060,360:1540]
             people_hash = phash(people_pic)
