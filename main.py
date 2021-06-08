@@ -60,10 +60,10 @@ def isset(v):
 
 def frames_to_timecode(framerate,frames):
     # 视频 通过视频帧转换成时间|framerate: 视频帧率|frames: 当前视频帧数|return:时间（00:00:01.001）
-    return '{0:02d}:{1:02d}:{2:02d}.{3:03d}'.format(int(frames / (3600 * framerate)),
+    return '{0:02d}:{1:02d}:{2:02d}.{3:02d}'.format(int(frames / (3600 * framerate)),
                                                     int(frames / (60 * framerate) % 60),
                                                     int(frames / framerate % 60),
-                                                    int(frames / framerate % 1 * 1000))
+                                                    int(frames / framerate % 1 * 100))
 
 def get_people(img):
     mobuo_rate = get_color_rate(img,np.array([100,185,225]),np.array([110,225,255]))
@@ -232,7 +232,7 @@ def autosub(videopath,subpath):
             
             if(hamming_distance(switch_hash,'1010010011000000101010001100000001000100000001011000011010100000') < 10):
                 trans = True   #识别转场
-            if((hmdistant > 13) and (current_frame_num != 0)):
+            if((hmdistant > 13) and (current_frame_num != 0) and (current_frame_num-last_frame_num > (frame_rate/4))):
                 people = get_people(people_pic)
                 if(trans):
                     people = "trans"
