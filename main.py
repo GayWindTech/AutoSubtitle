@@ -178,6 +178,7 @@ sub_num = 1
 Err = False
 
 def autosub(videopath,subpath):
+    subpath = subpath or 'output.ass'
     start = time.time()
     global op_match_times
     global op
@@ -210,6 +211,7 @@ def autosub(videopath,subpath):
                 frame_rate = round(source_video.get(5),2)
             
             current_pic = frame[950:1045,810:910]
+            assert 0 not in current_pic.shape, "视频分辨率应为1920*1080"
             pic_current_hash = phash(current_pic)
             hmdistant = hamming_distance(last_pic_hash,pic_current_hash)
             
