@@ -177,8 +177,7 @@ op_match_times = 0
 sub_num = 1
 Err = False
 
-def autosub(videopath,subpath):
-    subpath = subpath or 'output.ass'
+def autosub(videopath,subpath='output.ass'):
     start = time.time()
     global op_match_times
     global op
