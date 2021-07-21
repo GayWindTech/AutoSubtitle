@@ -242,9 +242,9 @@ def autosub(videopath,subpath='output.ass'):
                 if(trans):
                     people = "trans"
                     trans = False
+                    begin_frame_num += int(frame_rate/10)
                 
-                print(str(sub_num) + " | " + str(current_frame_num-1) + " <-> " + str(current_frame_num) + " | hmdst: " + str(hmdistant)+" | gap: "+str(current_frame_num-last_frame_num) +
-                        " | "+frames_to_timecode(frame_rate, begin_frame_num)+" --> "+frames_to_timecode(frame_rate, current_frame_num) + " | people: " + people)
+                print(str(sub_num) + " | " + str(current_frame_num-1) + " <-> " + str(current_frame_num) + " | hmdst: " + str(hmdistant)+" | gap: "+str(current_frame_num-last_frame_num) + " | "+frames_to_timecode(frame_rate, begin_frame_num)+" --> "+frames_to_timecode(frame_rate, current_frame_num) + " | people: " + people)
                 add_sub("示范性字幕",frames_to_timecode(frame_rate,begin_frame_num),frames_to_timecode(frame_rate,current_frame_num),people)
 
                 begin_frame_num = current_frame_num
