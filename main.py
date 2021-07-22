@@ -177,7 +177,7 @@ op_match_times = 0
 sub_num = 1
 Err = False
 
-def autosub(videopath,subpath='output.ass'):
+def autosub(videopath,subpath):
     start = time.time()
     global op_match_times
     global op
@@ -269,7 +269,7 @@ def autosub(videopath,subpath='output.ass'):
 def gui():
     print("正在呼起GUI...请稍后...")
     source_path_input = ""
-    target_path_input = ""
+    target_path_input = "output.ass"
     while(1):
         choose = eg.indexbox("\t\t\t     "+ "自动打轴机 By Yellowstone\n\n\t\t\t 请选择源视频文件与轴文件输出路径\n\n源视频路径：" + source_path_input + "\n\n轴文件输出路径：" + target_path_input,"AutoSubtitle",choices=("选择源视频","选择轴输出路径","开始打轴","退出程序"))
         if(choose == 0):
