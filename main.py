@@ -310,7 +310,7 @@ def gui():
                 eg.msgbox("\t\t\t    信息有误，请补充相关信息！","AutoSubtitle","确认")
                 continue
             if(autosub(source_path_input,target_path_input)):
-                eg.msgbox("\t\t\t打轴失败，请检查相关信息或报告错误！","AutoSubtitle","确认")
+                eg.msgbox("\t\t\t源视频读取出错，请检查相关信息或报告错误！","AutoSubtitle","确认")
                 continue
             else:
                 input("按回车退出...")
