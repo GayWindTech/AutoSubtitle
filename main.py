@@ -173,7 +173,7 @@ def add_op(frame_rate,begin_frame_num):
 current_frame_num = begin_frame_num = last_frame_num = 0
 last_pic_hash = ''
 op = trans = False
-op_match_times = 0
+op_match_times = op_bg_num = 0
 sub_num = 1
 Err = False
 
@@ -197,6 +197,7 @@ def autosub(videopath,subpath):
     global Err
     subtitle = subtitle_head.replace("$$FILE$$",os.path.abspath(videopath))
     source_video = cv2.VideoCapture(videopath)
+    global op_bg_num
     # 是否成功打开视频
     isOpened = False
     if source_video.isOpened():
@@ -204,6 +205,7 @@ def autosub(videopath,subpath):
     if isOpened:
         while True:
             ret, frame = source_video.read()
+            # print(current_frame_num)
             if ret == False:
                 break
             if(current_frame_num == 0):
@@ -220,20 +222,22 @@ def autosub(videopath,subpath):
             if(op_match_times < 2):
                 match_op_pic = frame
                 match_op_hash = phash(match_op_pic)
-            if(match_op_hash in opening and op_match_times < 2):
-                if(op_match_times == 0):
-                    # print(str(current_frame_num) + " | 开场白起点")
-                    op_bg_num = current_frame_num
-                    add_op(frame_rate,begin_frame_num)
-                op = bool(1 - op)
-                op_match_times += 1
-                if(op_match_times == 2):
-                    # print(str(current_frame_num) + " | 开场白结束")
-                    print(str(op_bg_num) + " <-> " + str(current_frame_num) + " | 开场白")
-                begin_frame_num = current_frame_num + 15
-            if(op):
-                current_frame_num += 1
-                continue
+                # print(hamming_distance(match_op_hash,opening[0]))
+                if(match_op_hash in opening):
+                    if(op_match_times == 0):
+                        # print(str(current_frame_num) + " | 开场白起点")
+                        op_bg_num = current_frame_num
+                        add_op(frame_rate,begin_frame_num)
+                    op = bool(1 - op)
+                    op_match_times += 1
+                    if(op_match_times == 2):
+                        # print(str(current_frame_num) + " | 开场白结束")
+                        print(str(op_bg_num) + " <-> " + str(current_frame_num) + " | 开场白")
+                    begin_frame_num = current_frame_num + 15
+                if(op):
+                    current_frame_num += 1
+                    # print(match_op_hash)
+                    continue
             
             if(hamming_distance(switch_hash,'1010010011000000101010001100000001000100000001011000011010100000') < 10):
                 trans = True   #识别转场
@@ -254,6 +258,8 @@ def autosub(videopath,subpath):
             people_pic = frame[940:1060,700:1300]
             people_hash = phash(people_pic)
             current_frame_num += 1
+            if(sub_num == 50):
+                break
     else:
         print("源视频读取出错")
         Err = True
