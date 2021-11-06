@@ -35,5 +35,5 @@ if(len(sys.argv) == 4):
         import main_flag
     elif(sys.argv[1]=='wsw'):
         sys.argv.remove("wsw")
-        import main_flag
+        import main_wsw
 
