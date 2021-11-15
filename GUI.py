@@ -54,6 +54,7 @@ class AutoSubtitle_class(QtWidgets.QMainWindow, Ui_AutoSubtitle):
             
     def updateVideoType(self):
         self.videoType = self.videoTypeList.currentIndex()
+        print('当前视频类型: '+ str(self.videoType))
             
     def raiseOpenFile(self): 
         filePath,openStatus=QFileDialog.getOpenFileName(self,'选择要打开的文件') 
