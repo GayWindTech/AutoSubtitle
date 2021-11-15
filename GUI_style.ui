@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>AutoSubtitle</class>
+ <widget class="QMainWindow" name="AutoSubtitle">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>630</width>
+    <height>204</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="contextMenuPolicy">
+   <enum>Qt::NoContextMenu</enum>
+  </property>
+  <property name="windowTitle">
+   <string>AutoSubtitle</string>
+  </property>
+  <property name="unifiedTitleAndToolBarOnMac">
+   <bool>false</bool>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QPushButton" name="startButton">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>150</y>
+      <width>331</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+      <weight>50</weight>
+      <italic>false</italic>
+      <bold>false</bold>
+      <kerning>true</kerning>
+     </font>
+    </property>
+    <property name="text">
+     <string>开始打轴</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Title">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>10</y>
+      <width>341</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>等线</family>
+      <pointsize>15</pointsize>
+      <stylestrategy>PreferDefault</stylestrategy>
+      <kerning>true</kerning>
+     </font>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;自动打轴机&lt;span style=&quot; color:#353535;&quot;&gt; - By Yellowstone&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="chooseButtom">
+    <property name="geometry">
+     <rect>
+      <x>520</x>
+      <y>70</y>
+      <width>81</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>选择打开视频</string>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="saveButtom">
+    <property name="geometry">
+     <rect>
+      <x>520</x>
+      <y>110</y>
+      <width>81</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>选择保存位置</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="OpenFilePathEdit">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>70</y>
+      <width>481</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="statusTip">
+     <string/>
+    </property>
+    <property name="placeholderText">
+     <string>请选择输入视频文件路径</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="SaveFilePathEdit">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>110</y>
+      <width>481</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="placeholderText">
+     <string>请选择轴保存路径</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="videoTypeList">
+    <property name="geometry">
+     <rect>
+      <x>370</x>
+      <y>40</y>
+      <width>231</width>
+      <height>21</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Title_2">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>360</x>
+      <y>10</y>
+      <width>251</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>等线</family>
+      <pointsize>13</pointsize>
+      <stylestrategy>PreferDefault</stylestrategy>
+      <kerning>true</kerning>
+     </font>
+    </property>
+    <property name="text">
+     <string>  请选择视频类型</string>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>chooseButtom</sender>
+   <signal>clicked()</signal>
+   <receiver>AutoSubtitle</receiver>
+   <slot>raiseOpenFile()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>427</x>
+     <y>68</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>411</x>
+     <y>102</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>saveButtom</sender>
+   <signal>clicked()</signal>
+   <receiver>AutoSubtitle</receiver>
+   <slot>raiseSaveFile()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>450</x>
+     <y>110</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>484</x>
+     <y>130</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>startButton</sender>
+   <signal>clicked()</signal>
+   <receiver>AutoSubtitle</receiver>
+   <slot>tryToStart()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>284</x>
+     <y>150</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>404</x>
+     <y>152</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>OpenFilePathEdit</sender>
+   <signal>editingFinished()</signal>
+   <receiver>AutoSubtitle</receiver>
+   <slot>updateOpenPath()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>190</x>
+     <y>69</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>389</x>
+     <y>40</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>SaveFilePathEdit</sender>
+   <signal>editingFinished()</signal>
+   <receiver>AutoSubtitle</receiver>
+   <slot>updateSavePath()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>104</x>
+     <y>96</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>25</x>
+     <y>135</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>raiseOpenFile()</slot>
+  <slot>raiseSaveFile()</slot>
+  <slot>tryToStart()</slot>
+  <slot>updateOpenPath()</slot>
+  <slot>updateSavePath()</slot>
+  <slot>exit()</slot>
+ </slots>
+</ui>
