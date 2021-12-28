@@ -55,6 +55,10 @@ Style: 旁白#2,极影毁片辉宋 Bold,95,&H00000000,&H00FFFFFF,&H00000000,&H29
 Style: 转场#2,仓耳渔阳体 W02,100,&H00FFFFFF,&H000000FF,&H00FFFFFF,&H00000000,-1,0,0,0,100,100,0,0,1,12,4,2,10,10,350,1
 Style: 未定义#2,极影毁片圆 Medium,95,&H00FFFFFF,&H00FFFFFF,&H00FFFFFF,&H17000000,0,0,0,0,100,100,1.14695,0,1,11,4,2,135,135,160,1
 Style: 浅卡其色#2,极影毁片圆 Medium,95,&H00FFFFFF,&H00FFFFFF,&H00FFFFFF,&H17000000,0,0,0,0,100,100,1.14695,0,1,11,4,2,135,135,160,1
+Style: 失恋flag#1,极影毁片圆 Medium,95,&H00F9F783,&H00FFFFFF,&H00000000,&H17FFFFFF,0,0,0,0,100,100,1.14695,0,1,7,0,2,135,135,160,1
+Style: 失恋flag#2,极影毁片圆 Medium,95,&H00FFFFFF,&H00FFFFFF,&H00FFFFFF,&H17000000,0,0,0,0,100,100,1.14695,0,1,11,4,2,135,135,160,1
+Style: 墨绿#1,极影毁片圆 Medium,95,&H0048AD0C,&H00FFFFFF,&H00000000,&H17FFFFFF,0,0,0,0,100,100,1.14695,0,1,7,0,2,135,135,160,1
+Style: 墨绿#2,极影毁片圆 Medium,95,&H00FFFFFF,&H00FFFFFF,&H00FFFFFF,&H17000000,0,0,0,0,100,100,1.14695,0,1,11,4,2,135,135,160,1
 
 
 [Events]
@@ -129,8 +133,12 @@ def get_people(img):
     kaqi_rate = 0 #这个奇葩颜色貌似不常见，禁用算了
     dongyun_rate = get_color_rate(img,np.array([0,83,225]),np.array([10,125,255]))
     yanghong_rate = get_color_rate(img,np.array([162,140,215]),np.array([170,180,255]))
-    rate_list = [mobuo_rate,flag_rate,renai_rate,seizon_rate,mobumi_rate,purple_rate,kaqi_rate,dongyun_rate,yanghong_rate]
-    people_list = ["mobuo","flag","renai","seizon","mobumi","purple","kaqi","dongyun","yanghong"]
+    yanghong2_rate = get_color_rate(img,np.array([160,200,205]),np.array([165,220,230]))
+    siturenn_rate = get_color_rate(img,np.array([90,75,205]),np.array([95,145,255]))
+    darkgreen_rate = get_color_rate(img,np.array([70,210,120]),np.array([75,255,155]))
+    narrator_rate = get_color_rate(img,np.array([0,0,225]),np.array([175,5,255]))
+    rate_list = [mobuo_rate,flag_rate,renai_rate,seizon_rate,mobumi_rate,purple_rate,kaqi_rate,dongyun_rate,yanghong_rate,yanghong2_rate,siturenn_rate,darkgreen_rate,narrator_rate]
+    people_list = ["mobuo","flag","renai","seizon","mobumi","purple","kaqi","dongyun","yanghong","yanghong","siturenn","darkgreen","narrator"]
     max_rate = max(rate_list)
     if(max_rate < 0.2 or rate_list.count(max_rate) > 1):
         # print(people_list)
@@ -151,7 +159,10 @@ def people2style(people):
         "kaqi":"浅卡其色#1",
         "dongyun":"东云色【辣妹美#1",
         "yanghong":"洋红色【魅力美#1",
-        "undefined":"未定义#1"}
+        "undefined":"未定义#1",
+        "narrator":"旁白#1",
+        "siturenn":"失恋flag#1",
+        "darkgreen":"墨绿#1"}
     return style_dict[people]
 
 def add_sub(subtext,begintime,endingtime,subpeople):
