@@ -137,12 +137,14 @@ def get_people(img):
     siturenn_rate = get_color_rate(img,np.array([90,75,205]),np.array([95,145,255]))
     darkgreen_rate = get_color_rate(img,np.array([70,210,120]),np.array([75,255,155]))
     narrator_rate = get_color_rate(img,np.array([0,0,225]),np.array([175,5,255]))
-    rate_list = [mobuo_rate,flag_rate,renai_rate,seizon_rate,mobumi_rate,purple_rate,kaqi_rate,dongyun_rate,yanghong_rate,yanghong2_rate,siturenn_rate,darkgreen_rate,narrator_rate]
-    people_list = ["mobuo","flag","renai","seizon","mobumi","purple","kaqi","dongyun","yanghong","yanghong","siturenn","darkgreen","narrator"]
+    rate_list = [mobuo_rate,flag_rate,renai_rate,seizon_rate,mobumi_rate,purple_rate,kaqi_rate,dongyun_rate,yanghong_rate,yanghong2_rate,siturenn_rate,darkgreen_rate]
+    people_list = ["mobuo","flag","renai","seizon","mobumi","purple","kaqi","dongyun","yanghong","yanghong","siturenn","darkgreen"]
     max_rate = max(rate_list)
     if(max_rate < 0.2 or rate_list.count(max_rate) > 1):
         # print(people_list)
         # print(rate_list)
+        if(narrator_rate > 0.2):
+            return "narrator"
         return "undefined"
     return people_list[rate_list.index(max_rate)]
 
