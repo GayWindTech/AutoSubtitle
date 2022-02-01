@@ -8,3 +8,4 @@ dist
 *.spec
 C
 AutoSubtitle-Build
+Pipfile*
