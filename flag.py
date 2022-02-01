@@ -61,6 +61,8 @@ Style: 墨绿#1,极影毁片圆 Medium,95,&H0048AD0C,&H00FFFFFF,&H00000000,&H17F
 Style: 墨绿#2,极影毁片圆 Medium,95,&H00FFFFFF,&H00FFFFFF,&H00FFFFFF,&H17000000,-1,0,0,0,100,100,1.14695,0,1,11,4,2,135,135,160,1
 Style: 深红色#1,极影毁片圆 Medium,95,&H002313BC,&H00FFFFFF,&H00000000,&H13FFFFFF,-1,0,0,0,100,100,1.14695,0,1,7,0,2,135,135,160,1
 Style: 深红色#2,极影毁片圆 Medium,95,&H00FFFFFF,&H00FFFFFF,&H00FFFFFF,&H17000000,-1,0,0,0,100,100,1.14695,0,1,11,4,2,135,135,160,1
+Style: 玫瑰色#1,极影毁片圆 Medium,95,&H008A25E3,&H00FFFFFF,&H00000000,&H13FFFFFF,-1,0,0,0,100,100,1.14695,0,1,7,0,2,135,135,160,1
+Style: 玫瑰色#2,极影毁片圆 Medium,95,&H00FFFFFF,&H00FFFFFF,&H00FFFFFF,&H17000000,-1,0,0,0,100,100,1.14695,0,1,11,4,2,135,135,160,1
 
 
 [Events]
@@ -138,16 +140,21 @@ def get_people(img):
     yanghong2_rate = get_color_rate(img,np.array([160,200,205]),np.array([165,220,230]))
     siturenn_rate = get_color_rate(img,np.array([90,75,205]),np.array([95,145,255]))
     darkgreen_rate = get_color_rate(img,np.array([70,210,120]),np.array([75,255,155]))
+    rose_rate = get_color_rate(img,np.array([160,210,195]),np.array([165,250,240]))
     narrator_rate = get_color_rate(img,np.array([0,0,225]),np.array([175,5,255]))
-    rate_list = [mobuo_rate,flag_rate,renai_rate,seizon_rate,mobumi_rate,purple_rate,kaqi_rate,dongyun_rate,yanghong_rate,yanghong2_rate,siturenn_rate,darkgreen_rate]
-    people_list = ["mobuo","flag","renai","seizon","mobumi","purple","kaqi","dongyun","yanghong","yanghong","siturenn","darkgreen"]
+    rate_list = [mobuo_rate,flag_rate,renai_rate,seizon_rate,mobumi_rate,purple_rate,kaqi_rate,dongyun_rate,yanghong_rate,yanghong2_rate,siturenn_rate,darkgreen_rate,rose_rate]
+    people_list = ["mobuo","flag","renai","seizon","mobumi","purple","kaqi","dongyun","yanghong","yanghong","siturenn","darkgreen","rose"]
     max_rate = max(rate_list)
-    if(max_rate < 0.2 or rate_list.count(max_rate) > 1):
-        # print(people_list)
-        # print(rate_list)
-        if(narrator_rate > 0.2):
+    print(people_list)
+    print(rate_list)
+    print(narrator_rate)
+    if(max_rate < 0.2):
+        if(len([x for x in rate_list if x > 4]) > 1):
+            return "undefined"
+        elif(narrator_rate > 25):
             return "narrator"
-        return "undefined"
+        else:
+            return "undefined"
     return people_list[rate_list.index(max_rate)]
 
 def people2style(people):
@@ -166,7 +173,8 @@ def people2style(people):
         "undefined":"未定义#1",
         "narrator":"旁白#1",
         "siturenn":"失恋flag#1",
-        "darkgreen":"墨绿#1"}
+        "darkgreen":"墨绿#1",
+        "rose":"玫瑰色#1"}
     return style_dict[people]
 
 def add_sub(subtext,begintime,endingtime,subpeople):
@@ -248,7 +256,7 @@ def autosub(videopath,subpath):
                     if(op_match_times == 2):
                         # print(str(current_frame_num) + " | 开场白结束")
                         print(str(op_bg_num) + " <-> " + str(current_frame_num) + " | 开场白")
-                    begin_frame_num = current_frame_num + 15
+                    begin_frame_num = last_frame_num = current_frame_num + 15
                 if(op):
                     current_frame_num += 1
                     # print(match_op_hash)
@@ -256,21 +264,22 @@ def autosub(videopath,subpath):
             
             if(hamming_distance(switch_hash,'1010010011000000101010001100000001000100000001011000011010100000') < 10):
                 trans = True   #识别转场
-            if((hmdistant > 13) and (current_frame_num != 0) and (current_frame_num-last_frame_num > (frame_rate/4))):
-                people = get_people(people_pic)
-                if(trans):
-                    people = "trans"
-                    trans = False
-                    begin_frame_num += int(frame_rate/10)
-                
-                print(str(sub_num) + " | " + str(current_frame_num-1) + " <-> " + str(current_frame_num) + " | hmdst: " + str(hmdistant)+" | gap: "+str(current_frame_num-last_frame_num) + " | "+frames_to_timecode(frame_rate, begin_frame_num)+" --> "+frames_to_timecode(frame_rate, current_frame_num) + " | people: " + people)
-                add_sub("示范性字幕",frames_to_timecode(frame_rate,begin_frame_num),frames_to_timecode(frame_rate,current_frame_num),people)
+            if((hmdistant > 13) and (current_frame_num != 0)):
+                if(current_frame_num-last_frame_num > (frame_rate/2)):
+                    people = get_people(people_pic)
+                    if(trans):
+                        people = "trans"
+                        trans = False
+                        begin_frame_num += int(frame_rate/10)
+                    
+                    print(str(sub_num) + " | " + str(current_frame_num-1) + " <-> " + str(current_frame_num) + " | hmdst: " + str(hmdistant)+" | gap: "+str(current_frame_num-last_frame_num) + " | "+frames_to_timecode(frame_rate, begin_frame_num)+" --> "+frames_to_timecode(frame_rate, current_frame_num) + " | people: " + people)
+                    add_sub("示范性字幕",frames_to_timecode(frame_rate,begin_frame_num),frames_to_timecode(frame_rate,current_frame_num),people)
 
                 begin_frame_num = current_frame_num
                 last_frame_num = current_frame_num
 
             last_pic_hash = pic_current_hash
-            people_pic = frame[940:1060,700:1300]
+            people_pic = frame[940:1040,800:1100]
             people_hash = phash(people_pic)
             current_frame_num += 1
     else:

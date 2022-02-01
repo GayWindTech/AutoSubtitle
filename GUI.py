@@ -42,6 +42,8 @@ class AutoSubtitle_class(QtWidgets.QMainWindow, Ui_AutoSubtitle):
                     self.openPath=path
                 else:
                     self.OpenFilePathEdit.clear()
+        defaultSavePath = str(path).split('.')[-2]+".ass"
+        self.SaveFilePathEdit.setText(defaultSavePath)
             
     def updateSavePath(self):
         path = self.SaveFilePathEdit.text()
