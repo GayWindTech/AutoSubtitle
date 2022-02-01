@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_AutoSubtitle(object):
     def setupUi(self, AutoSubtitle):
         AutoSubtitle.setObjectName("AutoSubtitle")
-        AutoSubtitle.resize(630, 204)
+        AutoSubtitle.resize(635, 204)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -76,6 +76,16 @@ class Ui_AutoSubtitle(object):
         font.setStyleStrategy(QtGui.QFont.PreferDefault)
         self.Title_2.setFont(font)
         self.Title_2.setObjectName("Title_2")
+        self.startButton_2 = QtWidgets.QPushButton(self.centralwidget)
+        self.startButton_2.setGeometry(QtCore.QRect(460, 140, 41, 20))
+        font = QtGui.QFont()
+        font.setPointSize(9)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
+        font.setKerning(True)
+        self.startButton_2.setFont(font)
+        self.startButton_2.setObjectName("startButton_2")
         AutoSubtitle.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(AutoSubtitle)
@@ -85,6 +95,7 @@ class Ui_AutoSubtitle(object):
         self.OpenFilePathEdit.editingFinished.connect(AutoSubtitle.updateOpenPath) # type: ignore
         self.SaveFilePathEdit.editingFinished.connect(AutoSubtitle.updateSavePath) # type: ignore
         self.videoTypeList.currentIndexChanged['int'].connect(AutoSubtitle.updateVideoType) # type: ignore
+        self.startButton_2.clicked.connect(AutoSubtitle.updateOpenPath) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(AutoSubtitle)
 
     def retranslateUi(self, AutoSubtitle):
@@ -97,4 +108,5 @@ class Ui_AutoSubtitle(object):
         self.OpenFilePathEdit.setPlaceholderText(_translate("AutoSubtitle", "请选择输入视频文件路径"))
         self.SaveFilePathEdit.setPlaceholderText(_translate("AutoSubtitle", "请选择轴保存路径"))
         self.Title_2.setText(_translate("AutoSubtitle", "  请选择视频类型"))
+        self.startButton_2.setText(_translate("AutoSubtitle", "默认"))
 from DragAcceptableQLine import DragAcceptableQLine
