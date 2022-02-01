@@ -98,7 +98,7 @@
      <string>选择保存位置</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="OpenFilePathEdit">
+   <widget class="DragAcceptableQLine" name="OpenFilePathEdit">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -173,6 +173,13 @@
    </widget>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>DragAcceptableQLine</class>
+   <extends>QLineEdit</extends>
+   <header>DragAcceptableQLine</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections>
   <connection>

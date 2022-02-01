@@ -50,7 +50,7 @@ class Ui_AutoSubtitle(object):
         self.saveButtom = QtWidgets.QToolButton(self.centralwidget)
         self.saveButtom.setGeometry(QtCore.QRect(520, 110, 81, 31))
         self.saveButtom.setObjectName("saveButtom")
-        self.OpenFilePathEdit = QtWidgets.QLineEdit(self.centralwidget)
+        self.OpenFilePathEdit = DragAcceptableQLine(self.centralwidget)
         self.OpenFilePathEdit.setGeometry(QtCore.QRect(20, 70, 481, 31))
         font = QtGui.QFont()
         font.setPointSize(10)
@@ -97,3 +97,4 @@ class Ui_AutoSubtitle(object):
         self.OpenFilePathEdit.setPlaceholderText(_translate("AutoSubtitle", "请选择输入视频文件路径"))
         self.SaveFilePathEdit.setPlaceholderText(_translate("AutoSubtitle", "请选择轴保存路径"))
         self.Title_2.setText(_translate("AutoSubtitle", "  请选择视频类型"))
+from DragAcceptableQLine import DragAcceptableQLine

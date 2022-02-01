@@ -2,7 +2,7 @@ import sys
 from pathlib import Path
 
 from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QFileDialog, QMessageBox
+from PyQt5.QtWidgets import QFileDialog, QMessageBox, QLineEdit
 
 from GUI_style import Ui_AutoSubtitle
 from verifyPath import is_path_exists_or_creatable
