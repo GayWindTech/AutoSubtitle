@@ -134,7 +134,7 @@ def get_people(img):
     people_list = ["Q","Q","W","W","E","darkgreen","gray","brown","orange","lightgreen","flesh","pink","khaki"]
     
     max_rate = max(rate_list)
-    if(max_rate < 0.2 or rate_list.count(max_rate) > 1):
+    if(max_rate < 0.2 or len([x for x in rate_list if x > 4]) > 1):
         # print(people_list)
         # print(rate_list)
         return "undefined"
@@ -244,11 +244,12 @@ def autosub(videopath,subpath):
                     continue
 
             # print(str(current_frame_num)+" | "+ match_op_hash)
-            if((hmdistant > 13) and (current_frame_num != 0) and (current_frame_num-last_frame_num > (frame_rate/4))):
-                people = get_people(people_pic)
-                
-                print(str(sub_num) + " | " + str(current_frame_num-1) + " <-> " + str(current_frame_num) + " | hmdst: " + str(hmdistant)+" | gap: "+str(current_frame_num-last_frame_num) + " | "+frames_to_timecode(frame_rate, begin_frame_num)+" --> "+frames_to_timecode(frame_rate, current_frame_num) + " | people: " + people)
-                add_sub("示范性字幕",frames_to_timecode(frame_rate,begin_frame_num),frames_to_timecode(frame_rate,current_frame_num),people)
+            if((hmdistant > 13) and (current_frame_num != 0)):
+                if(current_frame_num-last_frame_num > (frame_rate/2)):
+                    people = get_people(people_pic)
+                    
+                    print(str(sub_num) + " | " + str(current_frame_num-1) + " <-> " + str(current_frame_num) + " | hmdst: " + str(hmdistant)+" | gap: "+str(current_frame_num-last_frame_num) + " | "+frames_to_timecode(frame_rate, begin_frame_num)+" --> "+frames_to_timecode(frame_rate, current_frame_num) + " | people: " + people)
+                    add_sub("示范性字幕",frames_to_timecode(frame_rate,begin_frame_num),frames_to_timecode(frame_rate,current_frame_num),people)
 
                 begin_frame_num = current_frame_num
                 last_frame_num = current_frame_num
