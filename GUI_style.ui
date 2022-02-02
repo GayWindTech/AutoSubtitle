@@ -329,6 +329,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>FlagNewOPcheckBox</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>AutoSubtitle</receiver>
+   <slot>updateOPstyle()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>584</x>
+     <y>27</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>624</x>
+     <y>4</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>raiseOpenFile()</slot>
@@ -338,5 +354,6 @@
   <slot>updateSavePath()</slot>
   <slot>exit()</slot>
   <slot>updateVideoType()</slot>
+  <slot>updateOPstyle()</slot>
  </slots>
 </ui>

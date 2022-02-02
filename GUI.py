@@ -16,6 +16,7 @@ class AutoSubtitle_class(QtWidgets.QMainWindow, Ui_AutoSubtitle):
         self.videoTypeList.addItems(["全力回避Flag酱","混血万事屋"])
         self.videoType = self.videoTypeList.currentIndex()
         self.finish = False
+        self.newOP = False
         
     def closeEvent(self, event):
         if(not self.finish):
@@ -42,7 +43,7 @@ class AutoSubtitle_class(QtWidgets.QMainWindow, Ui_AutoSubtitle):
                     self.openPath=path
                 else:
                     self.OpenFilePathEdit.clear()
-        defaultSavePath = str(path).split('.')[-2]+".ass"
+        defaultSavePath = str(path).rstrip(str(path).split('.')[-1])+"ass"
         self.SaveFilePathEdit.setText(defaultSavePath)
             
     def updateSavePath(self):
@@ -56,6 +57,10 @@ class AutoSubtitle_class(QtWidgets.QMainWindow, Ui_AutoSubtitle):
             
     def updateVideoType(self):
         self.videoType = self.videoTypeList.currentIndex()
+        if(self.videoType == 0):
+            self.FlagNewOPcheckBox.setEnabled(True)
+        else:
+            self.FlagNewOPcheckBox.setEnabled(False)
         print('当前视频类型: '+ str(self.videoType))
             
     def raiseOpenFile(self): 
@@ -75,7 +80,13 @@ class AutoSubtitle_class(QtWidgets.QMainWindow, Ui_AutoSubtitle):
             return False
         return True
 
+    def updateOPstyle(self):
+        self.newOP = self.FlagNewOPcheckBox.isChecked()
+        print('NewOP: '+str(self.newOP))
+    
     def tryToStart(self):
+        self.updateOpenPath()
+        self.updateSavePath()
         if(not(Path(self.openPath).is_file() and is_path_exists_or_creatable(self.savePath))):
             QMessageBox.warning(self,'路径不正确','请选择正确的路径!\t\t\n',QMessageBox.Ok)
         else:
@@ -90,7 +101,7 @@ def runGUI():
     GUI_mainWindow.setFixedSize(GUI_mainWindow.width(), GUI_mainWindow.height())
     GUI_mainWindow.show()
     GUI_APP.exec_()
-    return GUI_mainWindow.openPath,GUI_mainWindow.savePath,GUI_mainWindow.videoType
+    return GUI_mainWindow.openPath,GUI_mainWindow.savePath,GUI_mainWindow.videoType,GUI_mainWindow.newOP
 
 if __name__ == "__main__":
     print(runGUI())

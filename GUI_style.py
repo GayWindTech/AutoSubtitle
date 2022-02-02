@@ -99,6 +99,7 @@ class Ui_AutoSubtitle(object):
         self.SaveFilePathEdit.editingFinished.connect(AutoSubtitle.updateSavePath) # type: ignore
         self.videoTypeList.currentIndexChanged['int'].connect(AutoSubtitle.updateVideoType) # type: ignore
         self.startButton_2.clicked.connect(AutoSubtitle.updateOpenPath) # type: ignore
+        self.FlagNewOPcheckBox.stateChanged['int'].connect(AutoSubtitle.updateOPstyle) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(AutoSubtitle)
 
     def retranslateUi(self, AutoSubtitle):

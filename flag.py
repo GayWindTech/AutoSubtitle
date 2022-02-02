@@ -6,7 +6,8 @@ import sys
 import numpy as np
 # import easygui as eg
 
-opening = ['1000011010001100010000000000000000000000000000000000000000000000','1100100000010000110010111001011101100100001000000001001011000001','1100100000010000110010111001011001100100001000000001001011000001']
+opening_old = ['1000011010001100010000000000000000000000000000000000000000000000','1100100000010000110010111001011101100100001000000001001011000001','1100100000010000110010111001011001100100001000000001001011000001']
+opening_new = ['1110010111000100000100010111000010010000000100000001001100000110','1101010010110011010001111001000101100000000100000011100010000001']
 
 subtitle_head = """
 [Script Info]
@@ -141,13 +142,11 @@ def get_people(img):
     siturenn_rate = get_color_rate(img,np.array([90,75,205]),np.array([95,145,255]))
     darkgreen_rate = get_color_rate(img,np.array([70,210,120]),np.array([75,255,155]))
     rose_rate = get_color_rate(img,np.array([160,210,195]),np.array([165,250,240]))
+    kami_rate = get_color_rate(img,np.array([25,110,245]),np.array([35,130,255]))
     narrator_rate = get_color_rate(img,np.array([0,0,225]),np.array([175,5,255]))
-    rate_list = [mobuo_rate,flag_rate,renai_rate,seizon_rate,mobumi_rate,purple_rate,kaqi_rate,dongyun_rate,yanghong_rate,yanghong2_rate,siturenn_rate,darkgreen_rate,rose_rate]
-    people_list = ["mobuo","flag","renai","seizon","mobumi","purple","kaqi","dongyun","yanghong","yanghong","siturenn","darkgreen","rose"]
+    rate_list = [mobuo_rate,flag_rate,renai_rate,seizon_rate,mobumi_rate,purple_rate,kaqi_rate,dongyun_rate,yanghong_rate,yanghong2_rate,siturenn_rate,darkgreen_rate,rose_rate,kami_rate]
+    people_list = ["mobuo","flag","renai","seizon","mobumi","purple","kaqi","dongyun","yanghong","yanghong","siturenn","darkgreen","rose","kami"]
     max_rate = max(rate_list)
-    print(people_list)
-    print(rate_list)
-    print(narrator_rate)
     if(max_rate < 0.2):
         if(len([x for x in rate_list if x > 4]) > 1):
             return "undefined"
@@ -174,7 +173,8 @@ def people2style(people):
         "narrator":"旁白#1",
         "siturenn":"失恋flag#1",
         "darkgreen":"墨绿#1",
-        "rose":"玫瑰色#1"}
+        "rose":"玫瑰色#1",
+        "kami":"神#1"}
     return style_dict[people]
 
 def add_sub(subtext,begintime,endingtime,subpeople):
@@ -184,12 +184,16 @@ def add_sub(subtext,begintime,endingtime,subpeople):
     subtitle = subtitle + "Dialogue: 1,"+ begintime +","+ endingtime +","+ style +","+ subpeople +",0,0,0,," + subtext + str(sub_num) + "\n"
     sub_num += 1
 
-def add_op(frame_rate,begin_frame_num):
-    add_sub("没有任何优点的路人男",frames_to_timecode(frame_rate,begin_frame_num),frames_to_timecode(frame_rate,begin_frame_num+(1.87*frame_rate)),"Opening")
-    add_sub("在路人男面前出现的女孩，她的真实身份是...?",frames_to_timecode(frame_rate,begin_frame_num+(1.87*frame_rate)),frames_to_timecode(frame_rate,begin_frame_num+(4.57*frame_rate)),"Opening")
-    add_sub("死亡flag?",frames_to_timecode(frame_rate,begin_frame_num+(4.57*frame_rate)),frames_to_timecode(frame_rate,begin_frame_num+(5.77*frame_rate)),"Opening")
-    add_sub("路人男能成功回避死亡flag吗!?",frames_to_timecode(frame_rate,begin_frame_num+(5.77*frame_rate)),frames_to_timecode(frame_rate,begin_frame_num+(8.47*frame_rate)),"Opening")
-    add_sub("全力回避flag酱!",frames_to_timecode(frame_rate,begin_frame_num+(8.47*frame_rate)),frames_to_timecode(frame_rate,begin_frame_num+(10.84*frame_rate)),"Opening")
+def add_op(frame_rate,begin_frame_num,new=False):
+    if(not new):
+        add_sub("没有任何优点的路人男",frames_to_timecode(frame_rate,begin_frame_num),frames_to_timecode(frame_rate,begin_frame_num+(1.87*frame_rate)),"Opening")
+        add_sub("在路人男面前出现的女孩，她的真实身份是...?",frames_to_timecode(frame_rate,begin_frame_num+(1.87*frame_rate)),frames_to_timecode(frame_rate,begin_frame_num+(4.57*frame_rate)),"Opening")
+        add_sub("死亡flag?",frames_to_timecode(frame_rate,begin_frame_num+(4.57*frame_rate)),frames_to_timecode(frame_rate,begin_frame_num+(5.77*frame_rate)),"Opening")
+        add_sub("路人男能成功回避死亡flag吗!?",frames_to_timecode(frame_rate,begin_frame_num+(5.77*frame_rate)),frames_to_timecode(frame_rate,begin_frame_num+(8.47*frame_rate)),"Opening")
+        add_sub("全力回避flag酱!",frames_to_timecode(frame_rate,begin_frame_num+(8.47*frame_rate)),frames_to_timecode(frame_rate,begin_frame_num+(10.84*frame_rate)),"Opening")
+    else:
+        add_sub("立起来了!",frames_to_timecode(frame_rate,begin_frame_num+(2.63*frame_rate)),frames_to_timecode(frame_rate,begin_frame_num+(3.59*frame_rate)),"Opening")
+        add_sub("全力回避flag酱!",frames_to_timecode(frame_rate,begin_frame_num+(4.9*frame_rate)),frames_to_timecode(frame_rate,begin_frame_num+(6.61*frame_rate)),"Opening")
 
 
 # 视频帧总数
@@ -200,7 +204,7 @@ op_match_times = op_bg_num = 0
 sub_num = 1
 Err = False
 
-def autosub(videopath,subpath):
+def autosub(videopath,subpath,newOP=False):
     start = time.time()
     global op_match_times
     global op
@@ -218,6 +222,7 @@ def autosub(videopath,subpath):
     global people_hash
     global people
     global Err
+    opening = opening_new if newOP else opening_old
     subtitle = subtitle_head.replace("$$FILE$$",os.path.abspath(videopath))
     source_video = cv2.VideoCapture(videopath)
     global op_bg_num
@@ -250,7 +255,7 @@ def autosub(videopath,subpath):
                     if(op_match_times == 0):
                         # print(str(current_frame_num) + " | 开场白起点")
                         op_bg_num = current_frame_num
-                        add_op(frame_rate,begin_frame_num)
+                        add_op(frame_rate,begin_frame_num,newOP)
                     op = bool(1 - op)
                     op_match_times += 1
                     if(op_match_times == 2):
