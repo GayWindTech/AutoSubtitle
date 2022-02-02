@@ -143,9 +143,10 @@ def get_people(img):
     darkgreen_rate = get_color_rate(img,np.array([70,210,120]),np.array([75,255,155]))
     rose_rate = get_color_rate(img,np.array([160,210,195]),np.array([165,250,240]))
     kami_rate = get_color_rate(img,np.array([25,110,245]),np.array([35,130,255]))
+    darkred_rate = get_color_rate(img,np.array([175,240,210]),np.array([180,255,225]))
     narrator_rate = get_color_rate(img,np.array([0,0,225]),np.array([175,5,255]))
-    rate_list = [mobuo_rate,flag_rate,renai_rate,seizon_rate,mobumi_rate,purple_rate,kaqi_rate,dongyun_rate,yanghong_rate,yanghong2_rate,siturenn_rate,darkgreen_rate,rose_rate,kami_rate]
-    people_list = ["mobuo","flag","renai","seizon","mobumi","purple","kaqi","dongyun","yanghong","yanghong","siturenn","darkgreen","rose","kami"]
+    rate_list = [mobuo_rate,flag_rate,renai_rate,seizon_rate,mobumi_rate,purple_rate,kaqi_rate,dongyun_rate,yanghong_rate,yanghong2_rate,siturenn_rate,darkgreen_rate,rose_rate,kami_rate,darkred_rate]
+    people_list = ["mobuo","flag","renai","seizon","mobumi","purple","kaqi","dongyun","yanghong","yanghong","siturenn","darkgreen","rose","kami","darkred"]
     max_rate = max(rate_list)
     if(max_rate < 0.2):
         if(len([x for x in rate_list if x > 4]) > 1):
@@ -174,7 +175,8 @@ def people2style(people):
         "siturenn":"失恋flag#1",
         "darkgreen":"墨绿#1",
         "rose":"玫瑰色#1",
-        "kami":"神#1"}
+        "kami":"神#1",
+        "darkred":"深红色#1"}
     return style_dict[people]
 
 def add_sub(subtext,begintime,endingtime,subpeople):
