@@ -86,6 +86,9 @@ class Ui_AutoSubtitle(object):
         font.setKerning(True)
         self.startButton_2.setFont(font)
         self.startButton_2.setObjectName("startButton_2")
+        self.FlagNewOPcheckBox = QtWidgets.QCheckBox(self.centralwidget)
+        self.FlagNewOPcheckBox.setGeometry(QtCore.QRect(510, 11, 91, 20))
+        self.FlagNewOPcheckBox.setObjectName("FlagNewOPcheckBox")
         AutoSubtitle.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(AutoSubtitle)
@@ -109,4 +112,5 @@ class Ui_AutoSubtitle(object):
         self.SaveFilePathEdit.setPlaceholderText(_translate("AutoSubtitle", "请选择轴保存路径"))
         self.Title_2.setText(_translate("AutoSubtitle", "  请选择视频类型"))
         self.startButton_2.setText(_translate("AutoSubtitle", "默认"))
+        self.FlagNewOPcheckBox.setText(_translate("AutoSubtitle", "Flag系列新OP"))
 from DragAcceptableQLine import DragAcceptableQLine

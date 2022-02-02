@@ -193,6 +193,19 @@
      <string>默认</string>
     </property>
    </widget>
+   <widget class="QCheckBox" name="FlagNewOPcheckBox">
+    <property name="geometry">
+     <rect>
+      <x>510</x>
+      <y>11</y>
+      <width>91</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Flag系列新OP</string>
+    </property>
+   </widget>
   </widget>
  </widget>
  <customwidgets>
