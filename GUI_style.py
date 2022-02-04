@@ -76,16 +76,16 @@ class Ui_AutoSubtitle(object):
         font.setStyleStrategy(QtGui.QFont.PreferDefault)
         self.Title_2.setFont(font)
         self.Title_2.setObjectName("Title_2")
-        self.startButton_2 = QtWidgets.QPushButton(self.centralwidget)
-        self.startButton_2.setGeometry(QtCore.QRect(460, 140, 41, 20))
+        self.setSavePathToDefaultButton = QtWidgets.QPushButton(self.centralwidget)
+        self.setSavePathToDefaultButton.setGeometry(QtCore.QRect(460, 140, 41, 20))
         font = QtGui.QFont()
         font.setPointSize(9)
         font.setBold(False)
         font.setItalic(False)
         font.setWeight(50)
         font.setKerning(True)
-        self.startButton_2.setFont(font)
-        self.startButton_2.setObjectName("startButton_2")
+        self.setSavePathToDefaultButton.setFont(font)
+        self.setSavePathToDefaultButton.setObjectName("setSavePathToDefaultButton")
         self.FlagNewOPcheckBox = QtWidgets.QCheckBox(self.centralwidget)
         self.FlagNewOPcheckBox.setGeometry(QtCore.QRect(510, 11, 91, 20))
         self.FlagNewOPcheckBox.setObjectName("FlagNewOPcheckBox")
@@ -98,7 +98,7 @@ class Ui_AutoSubtitle(object):
         self.OpenFilePathEdit.editingFinished.connect(AutoSubtitle.updateOpenPath) # type: ignore
         self.SaveFilePathEdit.editingFinished.connect(AutoSubtitle.updateSavePath) # type: ignore
         self.videoTypeList.currentIndexChanged['int'].connect(AutoSubtitle.updateVideoType) # type: ignore
-        self.startButton_2.clicked.connect(AutoSubtitle.updateOpenPath) # type: ignore
+        self.setSavePathToDefaultButton.clicked.connect(AutoSubtitle.setSavePathToDefault) # type: ignore
         self.FlagNewOPcheckBox.stateChanged['int'].connect(AutoSubtitle.updateOPstyle) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(AutoSubtitle)
 
@@ -112,6 +112,6 @@ class Ui_AutoSubtitle(object):
         self.OpenFilePathEdit.setPlaceholderText(_translate("AutoSubtitle", "请选择输入视频文件路径"))
         self.SaveFilePathEdit.setPlaceholderText(_translate("AutoSubtitle", "请选择轴保存路径"))
         self.Title_2.setText(_translate("AutoSubtitle", "  请选择视频类型"))
-        self.startButton_2.setText(_translate("AutoSubtitle", "默认"))
+        self.setSavePathToDefaultButton.setText(_translate("AutoSubtitle", "默认"))
         self.FlagNewOPcheckBox.setText(_translate("AutoSubtitle", "Flag系列新OP"))
 from DragAcceptableQLine import DragAcceptableQLine

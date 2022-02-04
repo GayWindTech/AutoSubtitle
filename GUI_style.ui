@@ -171,7 +171,7 @@
      <string>  请选择视频类型</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="startButton_2">
+   <widget class="QPushButton" name="setSavePathToDefaultButton">
     <property name="geometry">
      <rect>
       <x>460</x>
@@ -314,10 +314,10 @@
    </hints>
   </connection>
   <connection>
-   <sender>startButton_2</sender>
+   <sender>setSavePathToDefaultButton</sender>
    <signal>clicked()</signal>
    <receiver>AutoSubtitle</receiver>
-   <slot>updateOpenPath()</slot>
+   <slot>setSavePathToDefault()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>494</x>
@@ -355,5 +355,6 @@
   <slot>exit()</slot>
   <slot>updateVideoType()</slot>
   <slot>updateOPstyle()</slot>
+  <slot>setSavePathToDefault()</slot>
  </slots>
 </ui>
