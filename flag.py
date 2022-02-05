@@ -258,7 +258,7 @@ def autosub(videopath,subpath,newOP=False):
                     if(op_match_times == 0):
                         # print(str(current_frame_num) + " | 开场白起点")
                         op_bg_num = current_frame_num
-                        add_op(frame_rate,begin_frame_num,newOP)
+                        add_op(frame_rate,op_bg_num,newOP)
                     op = bool(1 - op)
                     op_match_times += 1
                     if(op_match_times == 2):
