@@ -7,7 +7,7 @@ def getInput():
     parser.add_argument('videoTypeStr', type=str, help='视频类型,可接受的参数: flag wsw',choices=['flag', 'wsw'])
     parser.add_argument('openPath', type=str, help='输入视频文件路径')
     parser.add_argument('-o', type=str, default='output.ass', required=False, help='输出字幕文件路径,默认为output.ass')
-    parser.add_argument('-s', type=str, default='old', required=False, help='flag系列OP类型,可接受old/new,默认为old', choices=['old', 'new'])
+    parser.add_argument('-s', type=str, default='new', required=False, help='flag系列OP类型,可接受old/new,默认为new', choices=['old', 'new'])
     args = parser.parse_args()
     videoTypeStr = args.videoTypeStr
     openPath = args.openPath

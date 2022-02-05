@@ -205,6 +205,9 @@
     <property name="text">
      <string>Flag系列新OP</string>
     </property>
+    <property name="checked">
+     <bool>true</bool>
+    </property>
    </widget>
   </widget>
  </widget>

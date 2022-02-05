@@ -88,6 +88,7 @@ class Ui_AutoSubtitle(object):
         self.setSavePathToDefaultButton.setObjectName("setSavePathToDefaultButton")
         self.FlagNewOPcheckBox = QtWidgets.QCheckBox(self.centralwidget)
         self.FlagNewOPcheckBox.setGeometry(QtCore.QRect(510, 11, 91, 20))
+        self.FlagNewOPcheckBox.setChecked(True)
         self.FlagNewOPcheckBox.setObjectName("FlagNewOPcheckBox")
         AutoSubtitle.setCentralWidget(self.centralwidget)
 

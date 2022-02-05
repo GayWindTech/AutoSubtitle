@@ -16,7 +16,7 @@ class AutoSubtitle_class(QtWidgets.QMainWindow, Ui_AutoSubtitle):
         self.videoTypeList.addItems(["全力回避Flag酱","混血万事屋"])
         self.videoType = self.videoTypeList.currentIndex()
         self.finish = False
-        self.newOP = False
+        self.newOP = True
         
     def closeEvent(self, event):
         if(not self.finish):
@@ -91,6 +91,7 @@ class AutoSubtitle_class(QtWidgets.QMainWindow, Ui_AutoSubtitle):
     def tryToStart(self):
         self.updateOpenPath()
         self.updateSavePath()
+        self.updateOPstyle()
         if(not(Path(self.openPath).is_file() and is_path_exists_or_creatable(self.savePath))):
             QMessageBox.warning(self,'路径不正确','请选择正确的路径!\t\t\n',QMessageBox.Ok)
         else:
