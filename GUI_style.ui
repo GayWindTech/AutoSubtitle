@@ -213,6 +213,9 @@
    <class>DragAcceptableQLine</class>
    <extends>QLineEdit</extends>
    <header>DragAcceptableQLine</header>
+   <slots>
+    <signal>dropAccepted()</signal>
+   </slots>
   </customwidget>
  </customwidgets>
  <resources/>
@@ -342,6 +345,22 @@
     <hint type="destinationlabel">
      <x>624</x>
      <y>4</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>OpenFilePathEdit</sender>
+   <signal>dropAccepted()</signal>
+   <receiver>AutoSubtitle</receiver>
+   <slot>updateOpenPath()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>292</x>
+     <y>85</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>293</x>
+     <y>47</y>
     </hint>
    </hints>
   </connection>
