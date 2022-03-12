@@ -76,10 +76,7 @@ def phash(img):
     #获得hsah
     for i in range(8):
         for j in range(8):
-            if img[i, j] > avg:
-                hash_str = hash_str+'1'
-            else:
-                hash_str = hash_str+'0'
+            hash_str = f'{hash_str}1' if img[i, j] > avg else f'{hash_str}0'
     return hash_str
 
 def get_color_rate(frame,lower,upper):
@@ -93,11 +90,7 @@ def hamming_distance(str1, str2):
     #计算汉明距离
     if len(str1) != len(str2):
         return 0
-    count = 0
-    for i in range(len(str1)):
-        if str1[i] != str2[i]:
-            count += 1
-    return count
+    return sum(str1[i] != str2[i] for i in range(len(str1)))
 
 def isset(v): 
     try : 
@@ -164,7 +157,14 @@ def add_sub(subtext,begintime,endingtime,subpeople):
     global sub_num
     global subtitle
     style = people2style(subpeople)
-    subtitle = subtitle + "Dialogue: 1,"+ begintime +","+ endingtime +","+ style +","+ subpeople +",0,0,0,," + subtext + str(sub_num) + "\n"
+    subtitle = (
+        f'{subtitle}Dialogue: 1,{begintime},{endingtime},{style},{subpeople}'
+        + ",0,0,0,,"
+        + subtext
+        + str(sub_num)
+        + "\n"
+    )
+
     sub_num += 1
 
 def add_op(frame_rate,begin_frame_num):
@@ -204,10 +204,7 @@ def autosub(videopath,subpath):
     subtitle = subtitle_head.replace("$$FILE$$",os.path.abspath(videopath))
     source_video = cv2.VideoCapture(videopath)
     global op_bg_num
-    # 是否成功打开视频
-    isOpened = False
-    if source_video.isOpened():
-        isOpened = True
+    isOpened = bool(source_video.isOpened())
     if isOpened:
         while True:
             ret, frame = source_video.read()
@@ -216,26 +213,33 @@ def autosub(videopath,subpath):
                 break
             if(current_frame_num == 0):
                 frame_rate = round(source_video.get(5),2)
-            
+
             current_pic = frame[950:1045,810:910]
             assert 0 not in current_pic.shape, "视频分辨率应为1920*1080"
             pic_current_hash = phash(current_pic)
             hmdistant = hamming_distance(last_pic_hash,pic_current_hash)
-            
-            if(op_match_times < 2):
+
+            if (op_match_times < 2):
                 match_op_pic = frame
                 match_op_hash = phash(match_op_pic)
                 # print(hamming_distance(match_op_hash,opening[0]))
-                if(match_op_hash in opening):
+                if (match_op_hash in opening):
                     if(op_match_times == 0):
                         # print(str(current_frame_num) + " | 开场白起点")
                         op_bg_num = current_frame_num
                         add_op(frame_rate,begin_frame_num)
                     op = bool(1 - op)
                     op_match_times += 1
-                    if(op_match_times == 2):
+                    if (op_match_times == 2):
                         # print(str(current_frame_num) + " | 开场白结束")
-                        print(str(op_bg_num) + " <-> " + str(current_frame_num+int((28/17)*frame_rate)) + " | 开场白")
+                        print(
+                            f'{str(op_bg_num)} <-> '
+                            + str(
+                                current_frame_num + int((28 / 17) * frame_rate)
+                            )
+                            + " | 开场白"
+                        )
+
                         begin_frame_num = current_frame_num + int((28/17)*frame_rate)
                         last_frame_num = begin_frame_num
                 if(op):
@@ -244,11 +248,25 @@ def autosub(videopath,subpath):
                     continue
 
             # print(str(current_frame_num)+" | "+ match_op_hash)
-            if((hmdistant > 13) and (current_frame_num != 0)):
-                if(current_frame_num-last_frame_num > (frame_rate/2)):
+            if ((hmdistant > 13) and (current_frame_num != 0)):
+                if (current_frame_num-last_frame_num > (frame_rate/2)):
                     people = get_people(people_pic)
-                    
-                    print(str(sub_num) + " | " + str(current_frame_num-1) + " <-> " + str(current_frame_num) + " | hmdst: " + str(hmdistant)+" | gap: "+str(current_frame_num-last_frame_num) + " | "+frames_to_timecode(frame_rate, begin_frame_num)+" --> "+frames_to_timecode(frame_rate, current_frame_num) + " | people: " + people)
+
+                    print(
+                        f'{str(sub_num)} | {str(current_frame_num-1)} <-> '
+                        + str(current_frame_num)
+                        + " | hmdst: "
+                        + str(hmdistant)
+                        + " | gap: "
+                        + str(current_frame_num - last_frame_num)
+                        + " | "
+                        + frames_to_timecode(frame_rate, begin_frame_num)
+                        + " --> "
+                        + frames_to_timecode(frame_rate, current_frame_num)
+                        + " | people: "
+                        + people
+                    )
+
                     add_sub("示范性字幕",frames_to_timecode(frame_rate,begin_frame_num),frames_to_timecode(frame_rate,current_frame_num),people)
 
                 begin_frame_num = current_frame_num
@@ -266,7 +284,7 @@ def autosub(videopath,subpath):
         with open(subpath,'w+',encoding='utf-8') as q:
             q.write(subtitle)
     end = time.time()
-    print('耗时：'+str(end - start)+'秒')
+    print(f'耗时：{str(end - start)}秒')
     return Err
 
 

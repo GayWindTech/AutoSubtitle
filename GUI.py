@@ -24,25 +24,24 @@ class AutoSubtitle_class(QtWidgets.QMainWindow, Ui_AutoSubtitle):
         
     def updateOpenPath(self):
         path = self.OpenFilePathEdit.text()
-        if(Path(path).is_file() == False):
+        if (Path(path).is_file() == False):
             QMessageBox.warning(self,'无法找到源文件','请重新选择正确的路径!\t\t\n',QMessageBox.Ok)
             print("源文件路径有误")
+        elif (self.checkForm(path)):
+            print(f"将会打开: {path}")
+            self.openPath=path
         else:
-            if(self.checkForm(path)):
-                print("将会打开: "+path)
+            self.askfornonvideo_box = QMessageBox(QMessageBox.Question, '文件格式未识别','您选择的文件疑似非视频文件，是否重新选择？\t\t\n')
+            self.askfornonvideo_box.setFixedSize(380,135)
+            status_insist = self.askfornonvideo_box.addButton('确认无误', QMessageBox.NoRole)
+            status_rechoose = self.askfornonvideo_box.addButton('重新选择', QMessageBox.YesRole)
+            self.askfornonvideo_box.setIcon(4)
+            self.askfornonvideo_box.exec()
+            if (self.askfornonvideo_box.clickedButton() == status_insist):
+                print(f"将会打开: {path}")
                 self.openPath=path
             else:
-                self.askfornonvideo_box = QMessageBox(QMessageBox.Question, '文件格式未识别','您选择的文件疑似非视频文件，是否重新选择？\t\t\n')
-                self.askfornonvideo_box.setFixedSize(380,135)
-                status_insist = self.askfornonvideo_box.addButton('确认无误', QMessageBox.NoRole)
-                status_rechoose = self.askfornonvideo_box.addButton('重新选择', QMessageBox.YesRole)
-                self.askfornonvideo_box.setIcon(4)
-                self.askfornonvideo_box.exec()
-                if(self.askfornonvideo_box.clickedButton() == status_insist):
-                    print("将会打开: "+path)
-                    self.openPath=path
-                else:
-                    self.OpenFilePathEdit.clear()
+                self.OpenFilePathEdit.clear()
     
     def setSavePathToDefault(self):
         path = self.openPath
@@ -52,11 +51,11 @@ class AutoSubtitle_class(QtWidgets.QMainWindow, Ui_AutoSubtitle):
     
     def updateSavePath(self):
         path = self.SaveFilePathEdit.text()
-        if(is_path_exists_or_creatable(path) == False):
+        if (is_path_exists_or_creatable(path) == False):
             QMessageBox.warning(self,'保存路径不正确','请重新选择正确的路径!\t\t\n',QMessageBox.Ok)
             print("保存路径有误")
         else:
-            print("将会保存至: "+path)
+            print(f"将会保存至: {path}")
             self.savePath=path
             
     def updateVideoType(self):
@@ -65,7 +64,7 @@ class AutoSubtitle_class(QtWidgets.QMainWindow, Ui_AutoSubtitle):
             self.FlagNewOPcheckBox.setEnabled(True)
         else:
             self.FlagNewOPcheckBox.setEnabled(False)
-        print('当前视频类型: '+ str(self.videoType))
+        print(f'当前视频类型: {str(self.videoType)}')
             
     def raiseOpenFile(self): 
         filePath,openStatus=QFileDialog.getOpenFileName(self,'选择要打开的文件') 
@@ -80,13 +79,11 @@ class AutoSubtitle_class(QtWidgets.QMainWindow, Ui_AutoSubtitle):
             self.updateSavePath()
             
     def checkForm(self,path:str):
-        if(not (path.split('.')[-1] in ["webm","mp4","mov","flv","mkv","m4v"])):
-            return False
-        return True
+        return path.split('.')[-1] in ["webm","mp4","mov","flv","mkv","m4v"]
 
     def updateOPstyle(self):
         self.newOP = self.FlagNewOPcheckBox.isChecked()
-        print('NewOP: '+str(self.newOP))
+        print(f'NewOP: {str(self.newOP)}')
     
     def tryToStart(self):
         self.updateOpenPath()
