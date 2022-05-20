@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import cv2
+import itertools
 import time
 import os
 import sys
@@ -77,18 +78,13 @@ def phash(img):
     img = img.astype(np.float32)
     #离散余弦变换
     img = cv2.dct(img)
-    img = img[0:8, 0:8]
-    avg = 0
     hash_str = ''
-    #计算均值
-    for i in range(8):
-        for j in range(8):
-            avg += img[i, j]
+    img = img[0:8, 0:8]
+    avg = sum(img[i, j] for i, j in itertools.product(range(8), range(8)))
     avg = avg/64
     #获得hsah
-    for i in range(8):
-        for j in range(8):
-            hash_str = f'{hash_str}1' if img[i, j] > avg else f'{hash_str}0'
+    for i, j in itertools.product(range(8), range(8)):
+        hash_str = f'{hash_str}1' if img[i, j] > avg else f'{hash_str}0'
     return hash_str
 
 def get_color_rate(frame,lower,upper):
@@ -105,12 +101,11 @@ def hamming_distance(str1, str2):
     return sum(str1[i] != str2[i] for i in range(len(str1)))
 
 def isset(v): 
-    try : 
-        type (eval(v)) 
-    except : 
-        return  0  
-    else : 
-        return  1  
+    try:
+        type(eval(v))
+    except NameError:
+        return  0
+    return  1 
 
 
 def frames_to_timecode(framerate,frames):
