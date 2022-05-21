@@ -1,0 +1,45 @@
+name: Package Application with Pyinstaller
+
+on: 
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.7'
+          architecture: 'x64'
+          cache: 'pip'
+      - name: Display Python version
+        run: python -c "import sys; print(sys.version)"
+        
+      - name: install req
+        run: pip install -r requirements.txt ; python -m unidic download ;
+        
+      - name: dl upx
+        run: certutil -urlcache -split -f https://github.com/upx/upx/releases/download/v3.96/upx-3.96-win64.zip upx.zip ; 7z x upx.zip
+      
+      - name: pack
+        run: pyinstaller --upx-dir upx-3.96-win64 AutoSubtitle.spec -y ; mv dist/AutoSubtitle.exe ./
+      
+      - name: upload
+        uses: actions/upload-artifact@v3
+        with:
+          name: GUI
+          path: AutoSubtitle.exe
+          
+      - name: release
+        uses: xresloader/upload-to-github-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          file: "AutoSubtitle.exe"
+          draft: false
+
