@@ -21,7 +21,7 @@ jobs:
         run: python -c "import sys; print(sys.version)"
         
       - name: install req
-        run: pip install -r requirements.txt ; python -m unidic download ;
+        run: pip install -r requirements.txt
         
       - name: dl upx
         run: certutil -urlcache -split -f https://github.com/upx/upx/releases/download/v3.96/upx-3.96-win64.zip upx.zip ; 7z x upx.zip
