@@ -1,8 +1,8 @@
 import sys
 from pathlib import Path
 
-from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QFileDialog, QMessageBox, QLineEdit
+from PyQt6 import QtWidgets
+from PyQt6.QtWidgets import QFileDialog, QMessageBox, QLineEdit
 
 from GUI_style import Ui_AutoSubtitle
 from verifyPath import is_path_exists_or_creatable
@@ -102,7 +102,7 @@ def runGUI():
     GUI_mainWindow = AutoSubtitle_class()
     GUI_mainWindow.setFixedSize(GUI_mainWindow.width(), GUI_mainWindow.height())
     GUI_mainWindow.show()
-    GUI_APP.exec_()
+    GUI_APP.exec()
     return GUI_mainWindow.openPath,GUI_mainWindow.savePath,GUI_mainWindow.videoType,GUI_mainWindow.newOP
 
 if __name__ == "__main__":
