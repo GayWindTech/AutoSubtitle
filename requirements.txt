@@ -3,3 +3,4 @@ opencv-python
 numpy
 pyinstaller
 PyWin32
+requests
