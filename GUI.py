@@ -25,17 +25,16 @@ class AutoSubtitle_class(QtWidgets.QMainWindow, Ui_AutoSubtitle):
     def updateOpenPath(self):
         path = self.OpenFilePathEdit.text()
         if (Path(path).is_file() == False):
-            QMessageBox.warning(self,'无法找到源文件','请重新选择正确的路径!\t\t\n',QMessageBox.Ok)
+            QMessageBox.warning(self,'无法找到源文件','请重新选择正确的路径!\t\t\n',QMessageBox.StandardButton.Ok)
             print("源文件路径有误")
         elif (self.checkForm(path)):
             print(f"将会打开: {path}")
             self.openPath=path
         else:
-            self.askfornonvideo_box = QMessageBox(QMessageBox.Question, '文件格式未识别','您选择的文件疑似非视频文件，是否重新选择？\t\t\n')
+            self.askfornonvideo_box = QMessageBox(QMessageBox.Icon.Question, '文件格式未识别','您选择的文件疑似非视频文件，是否重新选择？\t\t\n')
             self.askfornonvideo_box.setFixedSize(380,135)
-            status_insist = self.askfornonvideo_box.addButton('确认无误', QMessageBox.NoRole)
-            status_rechoose = self.askfornonvideo_box.addButton('重新选择', QMessageBox.YesRole)
-            self.askfornonvideo_box.setIcon(4)
+            status_insist = self.askfornonvideo_box.addButton('确认无误', QMessageBox.ButtonRole.NoRole)
+            status_rechoose = self.askfornonvideo_box.addButton('重新选择', QMessageBox.ButtonRole.YesRole)
             self.askfornonvideo_box.exec()
             if (self.askfornonvideo_box.clickedButton() == status_insist):
                 print(f"将会打开: {path}")
@@ -52,7 +51,7 @@ class AutoSubtitle_class(QtWidgets.QMainWindow, Ui_AutoSubtitle):
     def updateSavePath(self):
         path = self.SaveFilePathEdit.text()
         if (is_path_exists_or_creatable(path) == False):
-            QMessageBox.warning(self,'保存路径不正确','请重新选择正确的路径!\t\t\n',QMessageBox.Ok)
+            QMessageBox.warning(self,'保存路径不正确','请重新选择正确的路径!\t\t\n',QMessageBox.StandardButton.Ok)
             print("保存路径有误")
         else:
             print(f"将会保存至: {path}")
@@ -90,7 +89,7 @@ class AutoSubtitle_class(QtWidgets.QMainWindow, Ui_AutoSubtitle):
         self.updateSavePath()
         self.updateOPstyle()
         if(not(Path(self.openPath).is_file() and is_path_exists_or_creatable(self.savePath))):
-            QMessageBox.warning(self,'路径不正确','请选择正确的路径!\t\t\n',QMessageBox.Ok)
+            QMessageBox.warning(self,'路径不正确','请选择正确的路径!\t\t\n',QMessageBox.StandardButton.Ok)
         else:
             self.finish = True
             print('开始打轴...')
