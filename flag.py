@@ -225,13 +225,12 @@ def autosub(videopath,subpath,newOP=False):
     global op_bg_num
     isOpened = bool(source_video.isOpened())
     if isOpened:
+        frame_rate = round(source_video.get(5),2)
         while True:
             ret, frame = source_video.read()
             # print(current_frame_num)
             if ret == False:
                 break
-            if(current_frame_num == 0):
-                frame_rate = round(source_video.get(5),2)
 
             current_pic = frame[950:1045,810:910]
             assert 0 not in current_pic.shape, "视频分辨率应为1920*1080"
@@ -272,20 +271,7 @@ def autosub(videopath,subpath,newOP=False):
                         trans = False
                         begin_frame_num += int(frame_rate/10)
 
-                    print(
-                        f'{str(sub_num)} | {str(current_frame_num-1)} <-> '
-                        + str(current_frame_num)
-                        + " | hmdst: "
-                        + str(hmdistant)
-                        + " | gap: "
-                        + str(current_frame_num - last_frame_num)
-                        + " | "
-                        + frames_to_timecode(frame_rate, begin_frame_num)
-                        + " --> "
-                        + frames_to_timecode(frame_rate, current_frame_num)
-                        + " | people: "
-                        + people
-                    )
+                    print(f'{sub_num} | {current_frame_num-1} <-> {current_frame_num} | hmdst: {hmdistant} | gap: {current_frame_num - last_frame_num} | {frames_to_timecode(frame_rate, begin_frame_num)} --> {frames_to_timecode(frame_rate, current_frame_num)} | people: {people}')
 
                     add_sub("示范性字幕",frames_to_timecode(frame_rate,begin_frame_num),frames_to_timecode(frame_rate,current_frame_num),people)
 
