@@ -1,3 +1,4 @@
+import os
 import sys
 from pathlib import Path
 
@@ -44,7 +45,7 @@ class AutoSubtitle_class(QtWidgets.QMainWindow, Ui_AutoSubtitle):
     
     def setSavePathToDefault(self):
         path = self.openPath
-        defaultSavePath = str(path).rstrip(str(path).split('.')[-1])+"ass" if path != '' else "output.ass"
+        defaultSavePath = str(path).rstrip(str(path).split('.')[-1])+"ass" if path != '' else os.path.join(os.getcwd(), 'out.ass')
         self.SaveFilePathEdit.setText(defaultSavePath)
         self.updateSavePath()
     
@@ -72,7 +73,9 @@ class AutoSubtitle_class(QtWidgets.QMainWindow, Ui_AutoSubtitle):
             self.updateOpenPath()
             
     def raiseSaveFile(self): 
-        filePath,openStatus=QFileDialog.getSaveFileName(self,'选择要保存到的位置','out.ass','字幕文件 (*.ass)') 
+        path = self.openPath
+        defaultSavePath = os.path.basename(path).rstrip(str(path).split('.')[-1])+"ass" if path != '' else 'out.ass'
+        filePath,openStatus=QFileDialog.getSaveFileName(self,'选择要保存到的位置', defaultSavePath,'字幕文件 (*.ass)') 
         if openStatus: 
             self.SaveFilePathEdit.setText(filePath)
             self.updateSavePath()
