@@ -191,7 +191,6 @@ def autosub(videopath,subpath):
     global sub_num
     global current_pic
     global pic_current_hash
-    global hamdistant
     global people_pic
     global people_hash
     global people
@@ -226,13 +225,7 @@ def autosub(videopath,subpath):
                     op_match_times += 1
                     if (op_match_times == 2):
                         # print(str(current_frame_num) + " | 开场白结束")
-                        print(
-                            f'{str(op_bg_num)} <-> '
-                            + str(
-                                current_frame_num + int((28 / 17) * frame_rate)
-                            )
-                            + " | 开场白"
-                        )
+                        print(f'{op_bg_num} <-> {current_frame_num + int(28 / 17) * frame_rate} | 开场白')
 
                         begin_frame_num = current_frame_num + int((28/17)*frame_rate)
                         last_frame_num = begin_frame_num
@@ -246,20 +239,7 @@ def autosub(videopath,subpath):
                 if (current_frame_num-last_frame_num > (frame_rate/2)):
                     people = get_people(people_pic)
 
-                    print(
-                        f'{str(sub_num)} | {str(current_frame_num-1)} <-> '
-                        + str(current_frame_num)
-                        + " | hmdst: "
-                        + str(hmdistant)
-                        + " | gap: "
-                        + str(current_frame_num - last_frame_num)
-                        + " | "
-                        + frames_to_timecode(frame_rate, begin_frame_num)
-                        + " --> "
-                        + frames_to_timecode(frame_rate, current_frame_num)
-                        + " | people: "
-                        + people
-                    )
+                    print(f'{sub_num} | {current_frame_num-1} <-> {current_frame_num} | hmdst: {hmdistant} | gap: {current_frame_num - last_frame_num} | {frames_to_timecode(frame_rate, begin_frame_num)} --> {frames_to_timecode(frame_rate, current_frame_num)} | people: {people}')
 
                     add_sub("示范性字幕",frames_to_timecode(frame_rate,begin_frame_num),frames_to_timecode(frame_rate,current_frame_num),people)
 

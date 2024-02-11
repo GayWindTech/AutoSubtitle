@@ -14,7 +14,7 @@ class AutoSubtitle_class(QtWidgets.QMainWindow, Ui_AutoSubtitle):
         super(AutoSubtitle_class, self).__init__()
         self.setupUi(self)
         self.openPath=self.savePath=str()
-        self.videoTypeList.addItems(["全力回避Flag酱","混血万事屋"])
+        self.videoTypeList.addItems(["全力回避Flag酱"])
         self.videoType = self.videoTypeList.currentIndex()
         self.finish = False
         self.newOP = True

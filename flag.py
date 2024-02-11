@@ -28,44 +28,7 @@ Video File: $$FILE$$
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Default,思源黑體,100,&H00FFFFFF,&H00FFFFFF,&H00000000,&H910E0807,-1,0,0,0,100,100,1.14695,0,1,7,4,2,135,135,50,1
-Style: 未定义#1,极影毁片圆 Medium,95,&H00FFFFFF,&H00FFFFFF,&H00000000,&H910E0807,-1,0,0,0,100,100,1.14695,0,1,7,0,2,135,135,160,1
-Style: 路人男#1,极影毁片圆 Medium,95,&H00FCA439,&H00FFFFFF,&H00000000,&H13FFFFFF,-1,0,0,0,100,100,1.14695,0,1,7,0,2,135,135,160,1
-Style: 死亡flag#1,极影毁片圆 Medium,95,&H0042FFF8,&H00FFFFFF,&H00000000,&H17FFFFFF,-1,0,0,0,100,100,1.14695,0,1,7,0,2,135,135,160,1
-Style: 生存flag#1,极影毁片圆 Medium,95,&H00C6FF69,&H00FFFFFF,&H00000000,&H13FFFFFF,-1,0,0,0,100,100,1.14695,0,1,7,0,2,135,135,160,1
-Style: 恋爱flag#1,极影毁片圆 Medium,95,&H00EF9AF5,&H00FFFFFF,&H00000000,&H13FFFFFF,-1,0,0,0,100,100,1.14695,0,1,7,0,2,135,135,160,1
-Style: 路人美#1,极影毁片圆 Medium,95,&H0091E1FB,&H00FFFFFF,&H00000000,&H13FFFFFF,-1,0,0,0,100,100,1.14695,0,1,7,0,2,135,135,160,1
-Style: 浅卡其色#1,极影毁片圆 Medium,95,&H008ACEF0,&H00FFFFFF,&H00000000,&H13FFFFFF,-1,0,0,0,100,100,1.14695,0,1,7,0,2,135,135,160,1
-Style: 神#1,极影毁片圆 Medium,95,&H0087F9FE,&H00FFFFFF,&H00000000,&H17FFFFFF,-1,0,0,0,100,100,1.14695,0,1,7,0,2,135,135,160,1
-Style: 洋红色【魅力美#1,极影毁片圆 Medium,95,&H00890CD4,&H00FFFFFF,&H00000000,&H13FFFFFF,-1,0,0,0,100,100,1.14695,0,1,7,0,2,135,135,160,1
-Style: 东云色【辣妹美#1,极影毁片圆 Medium,95,&H009196F8,&H00FFFFFF,&H00000000,&H13FFFFFF,-1,0,0,0,100,100,1.14695,0,1,7,0,2,135,135,160,1
-Style: 淡紫色#1,极影毁片圆 Medium,95,&H00D26491,&H00FFFFFF,&H00000000,&H13FFFFFF,-1,0,0,0,100,100,1.14695,0,1,7,0,2,135,135,160,1
-Style: 开场白,Source Han Sans,120,&H00FFFFFF,&H00FFFFFF,&H00000000,&H910E0807,-1,0,0,0,100,100,1.14695,0,1,7,4,2,135,135,50,1
-Style: 旁白#1,极影毁片辉宋 Bold,95,&H00FFFFFF,&H00FFFFFF,&H00000000,&H910E0807,0,0,0,0,100,100,1.14695,0,1,9,0,2,135,135,160,1
-Style: 转场#1,仓耳渔阳体 W02,100,&H00FFFFFF,&H000000FF,&H00000000,&H00000000,-1,0,0,0,100,100,0,0,1,8,0,2,10,10,350,1
-Style: 译注,Source Han Sans,80,&H00FFFFFF,&H00FFFFFF,&H00000000,&H910E0807,-1,0,0,0,100,100,1.14695,0,1,5,2,7,50,0,50,1
-Style: 路人男#2,极影毁片圆 Medium,95,&H00FFFFFF,&H00FFFFFF,&H00FFFFFF,&H17000000,-1,0,0,0,100,100,1.14695,0,1,11,4,2,135,135,160,1
-Style: 死亡flag#2,极影毁片圆 Medium,95,&H00FFFFFF,&H00FFFFFF,&H00FFFFFF,&H17000000,-1,0,0,0,100,100,1.14695,0,1,11,4,2,135,135,160,1
-Style: 生存flag#2,极影毁片圆 Medium,95,&H00FFFFFF,&H00FFFFFF,&H00FFFFFF,&H17000000,-1,0,0,0,100,100,1.14695,0,1,11,4,2,135,135,160,1
-Style: 恋爱flag#2,极影毁片圆 Medium,95,&H00FFFFFF,&H00FFFFFF,&H00FFFFFF,&H17000000,-1,0,0,0,100,100,1.14695,0,1,11,4,2,135,135,160,1
-Style: 路人美#2,极影毁片圆 Medium,95,&H00FFFFFF,&H00FFFFFF,&H00FFFFFF,&H17000000,-1,0,0,0,100,100,1.14695,0,1,11,4,2,135,135,160,1
-Style: 神#2,极影毁片圆 Medium,95,&H00FFFFFF,&H00FFFFFF,&H00FFFFFF,&H17000000,-1,0,0,0,100,100,1.14695,0,1,11,4,2,135,135,160,1
-Style: 洋红色【魅力美#2,极影毁片圆 Medium,95,&H00FFFFFF,&H00FFFFFF,&H00FFFFFF,&H17000000,-1,0,0,0,100,100,1.14695,0,1,11,4,2,135,135,160,1
-Style: 东云色【辣妹美#2,极影毁片圆 Medium,95,&H00FFFFFF,&H00FFFFFF,&H00FFFFFF,&H17000000,-1,0,0,0,100,100,1.14695,0,1,11,4,2,135,135,160,1
-Style: 淡紫色#2,极影毁片圆 Medium,95,&H00FFFFFF,&H00FFFFFF,&H00FFFFFF,&H17000000,-1,0,0,0,100,100,1.14695,0,1,11,4,2,135,135,160,1
-Style: 旁白#2,极影毁片辉宋 Bold,95,&HFF000000,&H00FFFFFF,&H00FFFFFF,&H290E0807,0,0,0,0,100,100,1.14695,0,1,13,4,2,135,135,160,1
-Style: 转场#2,仓耳渔阳体 W02,100,&H00FFFFFF,&H000000FF,&H00FFFFFF,&H00000000,-1,0,0,0,100,100,0,0,1,12,4,2,10,10,350,1
-Style: 未定义#2,极影毁片圆 Medium,95,&H00FFFFFF,&H00FFFFFF,&H00FFFFFF,&H17000000,-1,0,0,0,100,100,1.14695,0,1,11,4,2,135,135,160,1
-Style: 浅卡其色#2,极影毁片圆 Medium,95,&H00FFFFFF,&H00FFFFFF,&H00FFFFFF,&H17000000,-1,0,0,0,100,100,1.14695,0,1,11,4,2,135,135,160,1
-Style: 失恋flag#1,极影毁片圆 Medium,95,&H00F9F783,&H00FFFFFF,&H00000000,&H17FFFFFF,-1,0,0,0,100,100,1.14695,0,1,7,0,2,135,135,160,1
-Style: 失恋flag#2,极影毁片圆 Medium,95,&H00FFFFFF,&H00FFFFFF,&H00FFFFFF,&H17000000,-1,0,0,0,100,100,1.14695,0,1,11,4,2,135,135,160,1
-Style: 墨绿#1,极影毁片圆 Medium,95,&H0048AD0C,&H00FFFFFF,&H00000000,&H17FFFFFF,-1,0,0,0,100,100,1.14695,0,1,7,0,2,135,135,160,1
-Style: 墨绿#2,极影毁片圆 Medium,95,&H00FFFFFF,&H00FFFFFF,&H00FFFFFF,&H17000000,-1,0,0,0,100,100,1.14695,0,1,11,4,2,135,135,160,1
-Style: 深红色#1,极影毁片圆 Medium,95,&H002313BC,&H00FFFFFF,&H00000000,&H13FFFFFF,-1,0,0,0,100,100,1.14695,0,1,7,0,2,135,135,160,1
-Style: 深红色#2,极影毁片圆 Medium,95,&H00FFFFFF,&H00FFFFFF,&H00FFFFFF,&H17000000,-1,0,0,0,100,100,1.14695,0,1,11,4,2,135,135,160,1
-Style: 玫瑰色#1,极影毁片圆 Medium,95,&H008A25E3,&H00FFFFFF,&H00000000,&H13FFFFFF,-1,0,0,0,100,100,1.14695,0,1,7,0,2,135,135,160,1
-Style: 玫瑰色#2,极影毁片圆 Medium,95,&H00FFFFFF,&H00FFFFFF,&H00FFFFFF,&H17000000,-1,0,0,0,100,100,1.14695,0,1,11,4,2,135,135,160,1
-
+$$STYLES$$
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
@@ -214,7 +177,6 @@ def autosub(videopath,subpath,newOP=False):
     global sub_num
     global current_pic
     global pic_current_hash
-    global hamdistant
     global people_pic
     global people_hash
     global people
@@ -264,6 +226,7 @@ def autosub(videopath,subpath,newOP=False):
             if(hamming_distance(switch_hash,'1010010011000000101010001100000001000100000001011000011010100000') < 10):
                 trans = True   #识别转场
             if ((hmdistant > 13) and (current_frame_num != 0)):
+                assert begin_frame_num == last_frame_num, str(begin_frame_num) + " | " + str(last_frame_num)
                 if (current_frame_num-last_frame_num > (frame_rate/2)):
                     people = get_people(people_pic)
                     if(trans):
@@ -271,8 +234,8 @@ def autosub(videopath,subpath,newOP=False):
                         trans = False
                         begin_frame_num += int(frame_rate/10)
 
-                    print(f'{sub_num} | {current_frame_num-1} <-> {current_frame_num} | hmdst: {hmdistant} | gap: {current_frame_num - last_frame_num} | {frames_to_timecode(frame_rate, begin_frame_num)} --> {frames_to_timecode(frame_rate, current_frame_num)} | people: {people}')
-
+                    # print(f'{sub_num} | {current_frame_num-1} <-> {current_frame_num} | hmdst: {hmdistant} | gap: {current_frame_num - last_frame_num} | {frames_to_timecode(frame_rate, begin_frame_num)} --> {frames_to_timecode(frame_rate, current_frame_num)} | people: {people}')
+                    print(begin_frame_num,current_frame_num)
                     add_sub("示范性字幕",frames_to_timecode(frame_rate,begin_frame_num),frames_to_timecode(frame_rate,current_frame_num),people)
 
                 begin_frame_num = current_frame_num
