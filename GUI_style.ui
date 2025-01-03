@@ -16,6 +16,11 @@
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
+  <property name="font">
+   <font>
+    <family>微软雅黑</family>
+   </font>
+  </property>
   <property name="contextMenuPolicy">
    <enum>Qt::NoContextMenu</enum>
   </property>
@@ -37,6 +42,7 @@
     </property>
     <property name="font">
      <font>
+      <family>微软雅黑</family>
       <pointsize>12</pointsize>
       <italic>false</italic>
       <bold>false</bold>
@@ -61,7 +67,7 @@
     </property>
     <property name="font">
      <font>
-      <family>等线</family>
+      <family>微软雅黑</family>
       <pointsize>15</pointsize>
       <stylestrategy>PreferDefault</stylestrategy>
       <kerning>true</kerning>
@@ -108,6 +114,7 @@
     </property>
     <property name="font">
      <font>
+      <family>微软雅黑</family>
       <pointsize>10</pointsize>
      </font>
     </property>
@@ -129,6 +136,7 @@
     </property>
     <property name="font">
      <font>
+      <family>微软雅黑</family>
       <pointsize>10</pointsize>
      </font>
     </property>
@@ -160,7 +168,7 @@
     </property>
     <property name="font">
      <font>
-      <family>等线</family>
+      <family>微软雅黑</family>
       <pointsize>13</pointsize>
       <stylestrategy>PreferDefault</stylestrategy>
       <kerning>true</kerning>
@@ -181,6 +189,7 @@
     </property>
     <property name="font">
      <font>
+      <family>微软雅黑</family>
       <pointsize>9</pointsize>
       <italic>false</italic>
       <bold>false</bold>
@@ -194,9 +203,9 @@
    <widget class="QComboBox" name="FlagOPcomboBox">
     <property name="geometry">
      <rect>
-      <x>530</x>
+      <x>510</x>
       <y>10</y>
-      <width>71</width>
+      <width>91</width>
       <height>22</height>
      </rect>
     </property>
@@ -209,14 +218,14 @@
      <rect>
       <x>370</x>
       <y>10</y>
-      <width>151</width>
+      <width>131</width>
       <height>21</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <family>等线</family>
-      <pointsize>11</pointsize>
+      <family>微软雅黑</family>
+      <pointsize>10</pointsize>
       <stylestrategy>PreferDefault</stylestrategy>
       <kerning>true</kerning>
      </font>
