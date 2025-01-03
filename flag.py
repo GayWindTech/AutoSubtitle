@@ -443,20 +443,29 @@ def autosub(videopath, subpath, opType):
             if ret == False:
                 break
 
-            current_pic = frame[950:1045,810:910]
-            assert 0 not in current_pic.shape, "视频分辨率应为1920*1080"
-            pic_current_hash = phash(current_pic)
+            assert 0 not in frame[950:1045, 810:910].shape, "视频分辨率应为1920*1080"
+            pic_current_hash = phash(frame[950:1045, 810:910])
             hmdistant = hamming_distance(last_pic_hash,pic_current_hash)
 
-            switch_pic = frame[940:1060,360:1540]
-            switch_hash = phash(switch_pic)
+            switch_hash = phash(frame[940:1060, 360:1540])
 
+            # match_op_hash = phash(frame)
+            # if current_frame_num == 575:
+            #     print(match_op_hash)
+            #     print(hamming_distance(match_op_hash, opening[0]))
+            # if current_frame_num == 981:
+            #     print(match_op_hash)
+            #     print(hamming_distance(match_op_hash, opening[0]))
+            #     print(hamming_distance(match_op_hash, opening[1]))
+            #     exit()
             if (op_match_times < 2):
-                match_op_pic = frame
-                match_op_hash = phash(match_op_pic)
+                match_op_hash = phash(frame)
                 # print(match_op_hash)
                 # print(hamming_distance(match_op_hash,opening[0]))
-                if match_op_hash in opening and current_frame_num - op_bg_num > 100:
+                if match_op_hash in opening or (
+                    op_match_times == 0
+                    and hamming_distance(match_op_hash, opening[0]) < 3
+                ):
                     if(op_match_times == 0):
                         # print(str(current_frame_num) + " | 开场白起点")
                         op_bg_num = current_frame_num
