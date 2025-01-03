@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file '.\GUI_style.ui'
+# Form implementation generated from reading ui file 'd:\Code\AutoSubtitle\GUI_style.ui'
 #
 # Created by: PyQt6 UI code generator 6.5.1
 #

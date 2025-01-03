@@ -9,6 +9,16 @@ import numpy as np
 
 opening_old = ['1000011010001100010000000000000000000000000000000000000000000000','1100100000010000110010111001011101100100001000000001001011000001','1100100000010000110010111001011001100100001000000001001011000001']
 opening_new = ['1110010111001100000100010111000010010000000100000001001100000110','1101010010110011010000111001000101100000000100000011100010000001']
+opening_newnew1 = [
+    "1000111010010001100100001100101011000011011000010011001010000110",
+    "1011100111011000101101000001011000010010001010001000110100100010",
+]
+opening_newnew2 = [
+    "1010101010101100010101010011010100110101100100001010100010001000",
+    "1011100111011000101101000001011000010010001010001000110100100010",
+]
+
+openings = [opening_old, opening_new, opening_newnew1, opening_newnew2]
 
 subtitle_head = """
 [Script Info]
@@ -28,43 +38,41 @@ Video File: $$FILE$$
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Default,思源黑體,100,&H00FFFFFF,&H00FFFFFF,&H00000000,&H910E0807,-1,0,0,0,100,100,1.14695,0,1,7,4,2,135,135,50,1
-Style: 未定义#1,极影毁片圆 Medium,95,&H00FFFFFF,&H00FFFFFF,&H00000000,&H910E0807,-1,0,0,0,100,100,1.14695,0,1,7,0,2,135,135,160,1
-Style: 路人男#1,极影毁片圆 Medium,95,&H00FCA439,&H00FFFFFF,&H00000000,&H13FFFFFF,-1,0,0,0,100,100,1.14695,0,1,7,0,2,135,135,160,1
-Style: 死亡flag#1,极影毁片圆 Medium,95,&H0042FFF8,&H00FFFFFF,&H00000000,&H17FFFFFF,-1,0,0,0,100,100,1.14695,0,1,7,0,2,135,135,160,1
-Style: 生存flag#1,极影毁片圆 Medium,95,&H00C6FF69,&H00FFFFFF,&H00000000,&H13FFFFFF,-1,0,0,0,100,100,1.14695,0,1,7,0,2,135,135,160,1
-Style: 恋爱flag#1,极影毁片圆 Medium,95,&H00EF9AF5,&H00FFFFFF,&H00000000,&H13FFFFFF,-1,0,0,0,100,100,1.14695,0,1,7,0,2,135,135,160,1
-Style: 路人美#1,极影毁片圆 Medium,95,&H0091E1FB,&H00FFFFFF,&H00000000,&H13FFFFFF,-1,0,0,0,100,100,1.14695,0,1,7,0,2,135,135,160,1
-Style: 浅卡其色#1,极影毁片圆 Medium,95,&H008ACEF0,&H00FFFFFF,&H00000000,&H13FFFFFF,-1,0,0,0,100,100,1.14695,0,1,7,0,2,135,135,160,1
-Style: 神#1,极影毁片圆 Medium,95,&H0087F9FE,&H00FFFFFF,&H00000000,&H17FFFFFF,-1,0,0,0,100,100,1.14695,0,1,7,0,2,135,135,160,1
-Style: 洋红色【魅力美#1,极影毁片圆 Medium,95,&H00890CD4,&H00FFFFFF,&H00000000,&H13FFFFFF,-1,0,0,0,100,100,1.14695,0,1,7,0,2,135,135,160,1
-Style: 东云色【辣妹美#1,极影毁片圆 Medium,95,&H009196F8,&H00FFFFFF,&H00000000,&H13FFFFFF,-1,0,0,0,100,100,1.14695,0,1,7,0,2,135,135,160,1
-Style: 淡紫色#1,极影毁片圆 Medium,95,&H00D26491,&H00FFFFFF,&H00000000,&H13FFFFFF,-1,0,0,0,100,100,1.14695,0,1,7,0,2,135,135,160,1
-Style: 开场白,Source Han Sans,120,&H00FFFFFF,&H00FFFFFF,&H00000000,&H910E0807,-1,0,0,0,100,100,1.14695,0,1,7,4,2,135,135,50,1
-Style: 旁白#1,极影毁片辉宋 Bold,95,&H00FFFFFF,&H00FFFFFF,&H00000000,&H910E0807,0,0,0,0,100,100,1.14695,0,1,9,0,2,135,135,160,1
-Style: 转场#1,仓耳渔阳体 W02,100,&H00FFFFFF,&H000000FF,&H00000000,&H00000000,-1,0,0,0,100,100,0,0,1,8,0,2,10,10,350,1
-Style: 译注,Source Han Sans,80,&H00FFFFFF,&H00FFFFFF,&H00000000,&H910E0807,-1,0,0,0,100,100,1.14695,0,1,5,2,7,50,0,50,1
-Style: 路人男#2,极影毁片圆 Medium,95,&H00FFFFFF,&H00FFFFFF,&H00FFFFFF,&H17000000,-1,0,0,0,100,100,1.14695,0,1,11,4,2,135,135,160,1
-Style: 死亡flag#2,极影毁片圆 Medium,95,&H00FFFFFF,&H00FFFFFF,&H00FFFFFF,&H17000000,-1,0,0,0,100,100,1.14695,0,1,11,4,2,135,135,160,1
-Style: 生存flag#2,极影毁片圆 Medium,95,&H00FFFFFF,&H00FFFFFF,&H00FFFFFF,&H17000000,-1,0,0,0,100,100,1.14695,0,1,11,4,2,135,135,160,1
-Style: 恋爱flag#2,极影毁片圆 Medium,95,&H00FFFFFF,&H00FFFFFF,&H00FFFFFF,&H17000000,-1,0,0,0,100,100,1.14695,0,1,11,4,2,135,135,160,1
-Style: 路人美#2,极影毁片圆 Medium,95,&H00FFFFFF,&H00FFFFFF,&H00FFFFFF,&H17000000,-1,0,0,0,100,100,1.14695,0,1,11,4,2,135,135,160,1
-Style: 神#2,极影毁片圆 Medium,95,&H00FFFFFF,&H00FFFFFF,&H00FFFFFF,&H17000000,-1,0,0,0,100,100,1.14695,0,1,11,4,2,135,135,160,1
-Style: 洋红色【魅力美#2,极影毁片圆 Medium,95,&H00FFFFFF,&H00FFFFFF,&H00FFFFFF,&H17000000,-1,0,0,0,100,100,1.14695,0,1,11,4,2,135,135,160,1
-Style: 东云色【辣妹美#2,极影毁片圆 Medium,95,&H00FFFFFF,&H00FFFFFF,&H00FFFFFF,&H17000000,-1,0,0,0,100,100,1.14695,0,1,11,4,2,135,135,160,1
-Style: 淡紫色#2,极影毁片圆 Medium,95,&H00FFFFFF,&H00FFFFFF,&H00FFFFFF,&H17000000,-1,0,0,0,100,100,1.14695,0,1,11,4,2,135,135,160,1
-Style: 旁白#2,极影毁片辉宋 Bold,95,&HFF000000,&H00FFFFFF,&H00FFFFFF,&H290E0807,0,0,0,0,100,100,1.14695,0,1,13,4,2,135,135,160,1
-Style: 转场#2,仓耳渔阳体 W02,100,&H00FFFFFF,&H000000FF,&H00FFFFFF,&H00000000,-1,0,0,0,100,100,0,0,1,12,4,2,10,10,350,1
-Style: 未定义#2,极影毁片圆 Medium,95,&H00FFFFFF,&H00FFFFFF,&H00FFFFFF,&H17000000,-1,0,0,0,100,100,1.14695,0,1,11,4,2,135,135,160,1
-Style: 浅卡其色#2,极影毁片圆 Medium,95,&H00FFFFFF,&H00FFFFFF,&H00FFFFFF,&H17000000,-1,0,0,0,100,100,1.14695,0,1,11,4,2,135,135,160,1
-Style: 失恋flag#1,极影毁片圆 Medium,95,&H00F9F783,&H00FFFFFF,&H00000000,&H17FFFFFF,-1,0,0,0,100,100,1.14695,0,1,7,0,2,135,135,160,1
-Style: 失恋flag#2,极影毁片圆 Medium,95,&H00FFFFFF,&H00FFFFFF,&H00FFFFFF,&H17000000,-1,0,0,0,100,100,1.14695,0,1,11,4,2,135,135,160,1
-Style: 墨绿#1,极影毁片圆 Medium,95,&H0048AD0C,&H00FFFFFF,&H00000000,&H17FFFFFF,-1,0,0,0,100,100,1.14695,0,1,7,0,2,135,135,160,1
-Style: 墨绿#2,极影毁片圆 Medium,95,&H00FFFFFF,&H00FFFFFF,&H00FFFFFF,&H17000000,-1,0,0,0,100,100,1.14695,0,1,11,4,2,135,135,160,1
-Style: 深红色#1,极影毁片圆 Medium,95,&H002313BC,&H00FFFFFF,&H00000000,&H13FFFFFF,-1,0,0,0,100,100,1.14695,0,1,7,0,2,135,135,160,1
-Style: 深红色#2,极影毁片圆 Medium,95,&H00FFFFFF,&H00FFFFFF,&H00FFFFFF,&H17000000,-1,0,0,0,100,100,1.14695,0,1,11,4,2,135,135,160,1
-Style: 玫瑰色#1,极影毁片圆 Medium,95,&H008A25E3,&H00FFFFFF,&H00000000,&H13FFFFFF,-1,0,0,0,100,100,1.14695,0,1,7,0,2,135,135,160,1
-Style: 玫瑰色#2,极影毁片圆 Medium,95,&H00FFFFFF,&H00FFFFFF,&H00FFFFFF,&H17000000,-1,0,0,0,100,100,1.14695,0,1,11,4,2,135,135,160,1
+Style: 未定义#正文#1,Resource Han Rounded CN,107,&H00FFFFFF,&H00FFFFFF,&H00000000,&H910E0807,-1,0,0,0,100,100,2,0,1,7,0,2,135,135,160,1
+Style: 路人男#正文#1,Resource Han Rounded CN,107,&H00FCA439,&H00FFFFFF,&H00000000,&H13FFFFFF,-1,0,0,0,100,100,2,0,1,7,0,2,135,135,160,1
+Style: 死亡flag#正文#1,Resource Han Rounded CN,107,&H0042FFF8,&H00FFFFFF,&H00000000,&H17FFFFFF,-1,0,0,0,100,100,2,0,1,7,0,2,135,135,160,1
+Style: 生存flag#正文#1,Resource Han Rounded CN,107,&H00BAFF48,&H00FFFFFF,&H00000000,&H13FFFFFF,-1,0,0,0,100,100,2,0,1,7,0,2,135,135,160,1
+Style: 恋爱flag#正文#1,Resource Han Rounded CN,107,&H00F4A9FF,&H00FFFFFF,&H00000000,&H13FFFFFF,-1,0,0,0,100,100,2,0,1,7,0,2,135,135,160,1
+Style: 失恋flag#正文#1,Resource Han Rounded CN,107,&H00FFED7D,&H00FFFFFF,&H00000000,&H17FFFFFF,-1,0,0,0,100,100,2,0,1,7,0,2,135,135,160,1
+Style: 毁灭flag#正文#1,Resource Han Rounded CN,107,&H00BDC805,&H00FFFFFF,&H00000000,&H13FFFFFF,-1,0,0,0,100,100,2,0,1,7,0,2,135,135,160,1
+Style: 路人妹#正文#1,Resource Han Rounded CN,107,&H00BF7DF7,&H00FFFFFF,&H00000000,&H13FFFFFF,-1,0,0,0,100,100,2,0,1,7,0,2,135,135,160,1
+Style: 娜娜#正文#1,Resource Han Rounded CN,107,&H004F83FA,&H00FFFFFF,&H00000000,&H13FFFFFF,-1,0,0,0,100,100,2,0,1,7,0,2,135,135,160,1
+Style: 小美#正文#1,Resource Han Rounded CN,107,&H0091E1FB,&H00FFFFFF,&H00000000,&H13FFFFFF,-1,0,0,0,100,100,2,0,1,7,0,2,135,135,160,1
+Style: 死神No.13#正文#1,Resource Han Rounded CN,107,&H0089FE97,&H00FFFFFF,&H00000000,&H17FFFFFF,-1,0,0,0,100,100,2,0,1,7,0,2,135,135,160,1
+Style: 死神No.1#正文#1,Resource Han Rounded CN,107,&H008428CA,&H00FFFFFF,&H00000000,&H13FFFFFF,-1,0,0,0,100,100,2,0,1,7,0,2,135,135,160,1
+Style: 贪婪#正文#1,Resource Han Rounded CN,107,&H00D866AD,&H00FFFFFF,&H00000000,&H13FFFFFF,-1,0,0,0,100,100,2,0,1,7,0,2,135,135,160,1
+Style: 愤怒#正文#1,Resource Han Rounded CN,107,&H005D54EE,&H00FFFFFF,&H00000000,&H13FFFFFF,-1,0,0,0,100,100,2,0,1,7,0,2,135,135,160,1
+Style: 嫉妒#正文#1,Resource Han Rounded CN,107,&H00C07DF8,&H00FFFFFF,&H00000000,&H13FFFFFF,-1,0,0,0,100,100,2,0,1,7,0,2,135,135,160,1
+Style: 神#正文#1,Resource Han Rounded CN,107,&H00D2FEFF,&H00FFFFFF,&H00000000,&H17FFFFFF,-1,0,0,0,100,100,2,0,1,7,0,2,135,135,160,1
+Style: 洋红色#正文#1,Resource Han Rounded CN,107,&H00A643F6,&H00FFFFFF,&H00000000,&H13FFFFFF,-1,0,0,0,100,100,2,0,1,7,0,2,135,135,160,1
+Style: 东云色#正文#1,Resource Han Rounded CN,107,&H009196F8,&H00FFFFFF,&H00000000,&H13FFFFFF,-1,0,0,0,100,100,2,0,1,7,0,2,135,135,160,1
+Style: 淡紫色#正文#1,Resource Han Rounded CN,107,&H00D97092,&H00FFFFFF,&H00000000,&H13FFFFFF,-1,0,0,0,100,100,2,0,1,7,0,2,135,135,160,1
+Style: 深红色#正文#1,Resource Han Rounded CN,107,&H00251AF0,&H00FFFFFF,&H00000000,&H13FFFFFF,-1,0,0,0,100,100,2,0,1,7,0,2,135,135,160,1
+Style: 土黄色#正文#1,Resource Han Rounded CN,107,&H0039B0EB,&H00FFFFFF,&H00000000,&H13FFFFFF,-1,0,0,0,100,100,2,0,1,7,0,2,135,135,160,1
+Style: 玫瑰色#正文#1,Resource Han Rounded CN,107,&H007848FE,&H00FFFFFF,&H00000000,&H13FFFFFF,-1,0,0,0,100,100,2,0,1,7,0,2,135,135,160,1
+Style: 酒红色#正文#1,Resource Han Rounded CN,107,&H008A25E1,&H00FFFFFF,&H00000000,&H13FFFFFF,-1,0,0,0,100,100,2,0,1,7,0,2,135,135,160,1
+Style: 橙色#正文#1,Resource Han Rounded CN,107,&H005183FC,&H00FFFFFF,&H00000000,&H13FFFFFF,-1,0,0,0,100,100,2,0,1,7,0,2,135,135,160,1
+Style: 蓝色#正文#1,Resource Han Rounded CN,107,&H00F7797C,&H00FFFFFF,&H00000000,&H13FFFFFF,-1,0,0,0,100,100,2,0,1,7,0,2,135,135,160,1
+Style: 绿色#正文#1,Resource Han Rounded CN,107,&H0090DB83,&H00FFFFFF,&H00000000,&H13FFFFFF,-1,0,0,0,100,100,2,0,1,7,0,2,135,135,160,1
+Style: 转场#1,TsangerYuYangT W02,100,&H00FFFFFF,&H000000FF,&H00000000,&H00000000,-1,0,0,0,100,100,0,0,1,8,0,2,10,10,350,1
+Style: 旁白#1,Source Han Serif CN Heavy,110,&H00FFFFFF,&H00FFFFFF,&H00000000,&H910E0807,0,0,0,0,100,100,2,0,1,9,0,2,135,135,160,1
+Style: 开场白,Source Han Sans CN,120,&H00FFFFFF,&H00FFFFFF,&H00000000,&H910E0807,-1,0,0,0,100,100,2,0,1,7,4,2,135,135,50,1
+Style: 转场#2,TsangerYuYangT W02,100,&H00FFFFFF,&H000000FF,&H00FFFFFF,&H00000000,-1,0,0,0,100,100,0,0,1,12,4,2,10,10,350,1
+Style: 旁白#2,Source Han Serif CN Heavy,110,&H00FFFFFF,&H00FFFFFF,&H00FFFFFF,&H290E0807,0,0,0,0,100,100,2,0,1,13,4,2,135,135,160,1
+Style: 白边框#正文#2,Resource Han Rounded CN,107,&H00FFFFFF,&H00FFFFFF,&H00FFFFFF,&H17000000,-1,0,0,0,100,100,2,0,1,11,4,2,135,135,160,1
+Style: 译注,Source Han Sans CN,80,&H00FFFFFF,&H00FFFFFF,&H00000000,&H910E0807,-1,0,0,0,100,100,2,0,1,5,2,7,50,0,50,1
+Style: フェン#正文#1,Resource Han Rounded CN,107,&H001854F0,&H00FFFFFF,&H00000000,&H13FFFFFF,-1,0,0,0,100,100,2,0,1,7,0,2,135,135,160,1
+Style: 样式1,Source Han Sans CN,72,&H00000000,&H00FFFFFF,&H00FFFFFF,&H910E0807,-1,0,0,0,100,100,2,0,1,6,0,8,50,0,50,1
 
 
 [Events]
@@ -147,24 +155,25 @@ def get_people(img):
 
 def people2style(people):
     style_dict = {
-        "mobuo":"路人男#1",
-        "flag":"死亡flag#1",
-        "seizon":"生存flag#1",
-        "renai":"恋爱flag#1",
-        "Opening":"开场白",
-        "trans":"转场#1",
-        "mobumi":"路人美#1",
-        "purple":"淡紫色#1",
-        "kaqi":"浅卡其色#1",
-        "dongyun":"东云色【辣妹美#1",
-        "yanghong":"洋红色【魅力美#1",
-        "undefined":"未定义#1",
-        "narrator":"旁白#1",
-        "siturenn":"失恋flag#1",
-        "darkgreen":"墨绿#1",
-        "rose":"玫瑰色#1",
-        "kami":"神#1",
-        "darkred":"深红色#1"}
+        "mobuo": "路人男#正文#1",
+        "flag": "死亡flag#正文#1",
+        "seizon": "生存flag#正文#1",
+        "renai": "恋爱flag#正文#1",
+        "Opening": "开场白",
+        "trans": "转场#1",
+        "mobumi": "路人妹#正文#1",
+        "purple": "淡紫色#正文#1",
+        "kaqi": "土黄色#正文#1",
+        "dongyun": "东云色#正文#1",
+        "yanghong": "洋红色#正文#1",
+        "undefined": "未定义#正文#1",
+        "narrator": "旁白#1",
+        "siturenn": "失恋flag#正文#1",
+        "darkgreen": "绿色#正文#1",
+        "rose": "玫瑰色#正文#1",
+        "kami": "神#正文#1",
+        "darkred": "深红色#正文#1",
+    }
     return style_dict[people]
 
 def add_sub(subtext,begintime,endingtime,subpeople):
@@ -181,16 +190,217 @@ def add_sub(subtext,begintime,endingtime,subpeople):
 
     sub_num += 1
 
-def add_op(frame_rate,begin_frame_num,new=False):
-    if(not new):
-        add_sub("没有任何优点的路人男",frames_to_timecode(frame_rate,begin_frame_num),frames_to_timecode(frame_rate,begin_frame_num+(1.87*frame_rate)),"Opening")
-        add_sub("在路人男面前出现的女孩，她的真实身份是...?",frames_to_timecode(frame_rate,begin_frame_num+(1.87*frame_rate)),frames_to_timecode(frame_rate,begin_frame_num+(4.57*frame_rate)),"Opening")
-        add_sub("死亡flag?",frames_to_timecode(frame_rate,begin_frame_num+(4.57*frame_rate)),frames_to_timecode(frame_rate,begin_frame_num+(5.77*frame_rate)),"Opening")
-        add_sub("路人男能成功回避死亡flag吗!?",frames_to_timecode(frame_rate,begin_frame_num+(5.77*frame_rate)),frames_to_timecode(frame_rate,begin_frame_num+(8.47*frame_rate)),"Opening")
-        add_sub("全力回避flag酱!",frames_to_timecode(frame_rate,begin_frame_num+(8.47*frame_rate)),frames_to_timecode(frame_rate,begin_frame_num+(10.84*frame_rate)),"Opening")
-    else:
-        add_sub("立起来了!",frames_to_timecode(frame_rate,begin_frame_num+(2.63*frame_rate)),frames_to_timecode(frame_rate,begin_frame_num+(3.59*frame_rate)),"Opening")
-        add_sub("全力回避flag酱!",frames_to_timecode(frame_rate,begin_frame_num+(4.9*frame_rate)),frames_to_timecode(frame_rate,begin_frame_num+(6.61*frame_rate)),"Opening")
+
+def add_op(frame_rate, begin_frame_num, opType):
+    match opType:
+        case 0:
+            add_sub(
+                "没有任何优点的路人男",
+                frames_to_timecode(frame_rate, begin_frame_num),
+                frames_to_timecode(frame_rate, begin_frame_num + (1.87 * frame_rate)),
+                "Opening",
+            )
+            add_sub(
+                "在路人男面前出现的女孩，她的真实身份是...?",
+                frames_to_timecode(frame_rate, begin_frame_num + (1.87 * frame_rate)),
+                frames_to_timecode(frame_rate, begin_frame_num + (4.57 * frame_rate)),
+                "Opening",
+            )
+            add_sub(
+                "死亡flag?",
+                frames_to_timecode(frame_rate, begin_frame_num + (4.57 * frame_rate)),
+                frames_to_timecode(frame_rate, begin_frame_num + (5.77 * frame_rate)),
+                "Opening",
+            )
+            add_sub(
+                "路人男能成功回避死亡flag吗!?",
+                frames_to_timecode(frame_rate, begin_frame_num + (5.77 * frame_rate)),
+                frames_to_timecode(frame_rate, begin_frame_num + (8.47 * frame_rate)),
+                "Opening",
+            )
+            add_sub(
+                "全力回避flag酱!",
+                frames_to_timecode(frame_rate, begin_frame_num + (8.47 * frame_rate)),
+                frames_to_timecode(frame_rate, begin_frame_num + (10.84 * frame_rate)),
+                "Opening",
+            )
+        case 1:
+            add_sub(
+                "立起来了!",
+                frames_to_timecode(frame_rate, begin_frame_num + (2.63 * frame_rate)),
+                frames_to_timecode(frame_rate, begin_frame_num + (3.59 * frame_rate)),
+                "Opening",
+            )
+            add_sub(
+                "全力回避flag酱!",
+                frames_to_timecode(frame_rate, begin_frame_num + (4.9 * frame_rate)),
+                frames_to_timecode(frame_rate, begin_frame_num + (6.61 * frame_rate)),
+                "Opening",
+            )
+        case 2:
+            add_sub(
+                "flag回收",
+                frames_to_timecode(frame_rate, begin_frame_num + (0.44 * frame_rate)),
+                frames_to_timecode(frame_rate, begin_frame_num + (2.19 * frame_rate)),
+                "narrator",
+            )
+            add_sub(
+                "是引导灵魂走向正确的命运的",
+                frames_to_timecode(frame_rate, begin_frame_num + (2.19 * frame_rate)),
+                frames_to_timecode(frame_rate, begin_frame_num + (4.86 * frame_rate)),
+                "narrator",
+            )
+            add_sub(
+                "天界之使命",
+                frames_to_timecode(frame_rate, begin_frame_num + (4.86 * frame_rate)),
+                frames_to_timecode(frame_rate, begin_frame_num + (6.73 * frame_rate)),
+                "narrator",
+            )
+            add_sub(
+                "而威胁flag回收的存在——",
+                frames_to_timecode(frame_rate, begin_frame_num + (6.73 * frame_rate)),
+                frames_to_timecode(frame_rate, begin_frame_num + (9.27 * frame_rate)),
+                "narrator",
+            )
+            add_sub(
+                "恶魔，从地狱出现了",
+                frames_to_timecode(frame_rate, begin_frame_num + (9.27 * frame_rate)),
+                frames_to_timecode(frame_rate, begin_frame_num + (11.90 * frame_rate)),
+                "narrator",
+            )
+            add_sub(
+                "没能被回收flag的灵魂",
+                frames_to_timecode(frame_rate, begin_frame_num + (11.90 * frame_rate)),
+                frames_to_timecode(frame_rate, begin_frame_num + (14.19 * frame_rate)),
+                "narrator",
+            )
+            add_sub(
+                "会因为走向错误的命运而堕入地狱",
+                frames_to_timecode(frame_rate, begin_frame_num + (14.19 * frame_rate)),
+                frames_to_timecode(frame_rate, begin_frame_num + (17.69 * frame_rate)),
+                "narrator",
+            )
+            add_sub(
+                "为了阻止试图扩大地狱势力的恶魔",
+                frames_to_timecode(frame_rate, begin_frame_num + (17.69 * frame_rate)),
+                frames_to_timecode(frame_rate, begin_frame_num + (20.82 * frame_rate)),
+                "narrator",
+            )
+            add_sub(
+                "flag们今天也要战斗!",
+                frames_to_timecode(frame_rate, begin_frame_num + (20.82 * frame_rate)),
+                frames_to_timecode(frame_rate, begin_frame_num + (22.73 * frame_rate)),
+                "narrator",
+            )
+            add_sub(
+                "绝对回收Death Flag决不放弃",
+                frames_to_timecode(frame_rate, begin_frame_num + (24.52 * frame_rate)),
+                frames_to_timecode(frame_rate, begin_frame_num + (28.36 * frame_rate)),
+                "Opening",
+            )
+            add_sub(
+                "干劲满满!",
+                frames_to_timecode(frame_rate, begin_frame_num + (28.36 * frame_rate)),
+                frames_to_timecode(frame_rate, begin_frame_num + (30.36 * frame_rate)),
+                "Opening",
+            )
+            add_sub(
+                "却总是失败的死神啊!",
+                frames_to_timecode(frame_rate, begin_frame_num + (30.36 * frame_rate)),
+                frames_to_timecode(frame_rate, begin_frame_num + (32.94 * frame_rate)),
+                "Opening",
+            )
+            add_sub(
+                "但是下次一定会成功回收!",
+                frames_to_timecode(frame_rate, begin_frame_num + (32.94 * frame_rate)),
+                frames_to_timecode(frame_rate, begin_frame_num + (35.77 * frame_rate)),
+                "Opening",
+            )
+            add_sub(
+                "绝对回收! 绝对回收! 绝对回收!",
+                frames_to_timecode(frame_rate, begin_frame_num + (35.77 * frame_rate)),
+                frames_to_timecode(frame_rate, begin_frame_num + (38.02 * frame_rate)),
+                "Opening",
+            )
+            add_sub(
+                "Flag绝对回收! 绝对回收!",
+                frames_to_timecode(frame_rate, begin_frame_num + (38.02 * frame_rate)),
+                frames_to_timecode(frame_rate, begin_frame_num + (39.98 * frame_rate)),
+                "Opening",
+            )
+            add_sub(
+                "DeDeDe Death Flag",
+                frames_to_timecode(frame_rate, begin_frame_num + (39.98 * frame_rate)),
+                frames_to_timecode(frame_rate, begin_frame_num + (41.02 * frame_rate)),
+                "Opening",
+            )
+            add_sub(
+                "绝对回收! 绝对回收! 绝对回收!",
+                frames_to_timecode(frame_rate, begin_frame_num + (41.02 * frame_rate)),
+                frames_to_timecode(frame_rate, begin_frame_num + (43.07 * frame_rate)),
+                "Opening",
+            )
+            add_sub(
+                "Flag绝对回收! 绝对回收! Death Flag",
+                frames_to_timecode(frame_rate, begin_frame_num + (43.07 * frame_rate)),
+                frames_to_timecode(frame_rate, begin_frame_num + (46.19 * frame_rate)),
+                "Opening",
+            )
+        case 3:
+            add_sub(
+                "绝对回收Death Flag决不放弃",
+                frames_to_timecode(frame_rate, begin_frame_num + (1.73 * frame_rate)),
+                frames_to_timecode(frame_rate, begin_frame_num + (5.57 * frame_rate)),
+                "Opening",
+            )
+            add_sub(
+                "干劲满满!",
+                frames_to_timecode(frame_rate, begin_frame_num + (5.57 * frame_rate)),
+                frames_to_timecode(frame_rate, begin_frame_num + (7.57 * frame_rate)),
+                "Opening",
+            )
+            add_sub(
+                "却总是失败的死神啊!",
+                frames_to_timecode(frame_rate, begin_frame_num + (7.57 * frame_rate)),
+                frames_to_timecode(frame_rate, begin_frame_num + (10.15 * frame_rate)),
+                "Opening",
+            )
+            add_sub(
+                "但是下次一定会成功回收!",
+                frames_to_timecode(frame_rate, begin_frame_num + (10.15 * frame_rate)),
+                frames_to_timecode(frame_rate, begin_frame_num + (12.98 * frame_rate)),
+                "Opening",
+            )
+            add_sub(
+                "绝对回收! 绝对回收! 绝对回收!",
+                frames_to_timecode(frame_rate, begin_frame_num + (12.98 * frame_rate)),
+                frames_to_timecode(frame_rate, begin_frame_num + (15.23 * frame_rate)),
+                "Opening",
+            )
+            add_sub(
+                "Flag绝对回收! 绝对回收!",
+                frames_to_timecode(frame_rate, begin_frame_num + (15.23 * frame_rate)),
+                frames_to_timecode(frame_rate, begin_frame_num + (17.19 * frame_rate)),
+                "Opening",
+            )
+            add_sub(
+                "DeDeDe Death Flag",
+                frames_to_timecode(frame_rate, begin_frame_num + (17.19 * frame_rate)),
+                frames_to_timecode(frame_rate, begin_frame_num + (18.23 * frame_rate)),
+                "Opening",
+            )
+            add_sub(
+                "绝对回收! 绝对回收! 绝对回收!",
+                frames_to_timecode(frame_rate, begin_frame_num + (18.23 * frame_rate)),
+                frames_to_timecode(frame_rate, begin_frame_num + (20.28 * frame_rate)),
+                "Opening",
+            )
+            add_sub(
+                "Flag绝对回收! 绝对回收! Death Flag",
+                frames_to_timecode(frame_rate, begin_frame_num + (20.28 * frame_rate)),
+                frames_to_timecode(frame_rate, begin_frame_num + (23.40 * frame_rate)),
+                "Opening",
+            )
 
 
 # 视频帧总数
@@ -201,7 +411,8 @@ op_match_times = op_bg_num = 0
 sub_num = 1
 Err = False
 
-def autosub(videopath,subpath,newOP=False):
+
+def autosub(videopath, subpath, opType):
     start = time.time()
     global op_match_times
     global op
@@ -219,7 +430,7 @@ def autosub(videopath,subpath,newOP=False):
     global people_hash
     global people
     global Err
-    opening = opening_new if newOP else opening_old
+    opening = openings[opType]
     subtitle = subtitle_head.replace("$$FILE$$",os.path.abspath(videopath))
     source_video = cv2.VideoCapture(videopath)
     global op_bg_num
@@ -245,12 +456,12 @@ def autosub(videopath,subpath,newOP=False):
                 match_op_hash = phash(match_op_pic)
                 # print(match_op_hash)
                 # print(hamming_distance(match_op_hash,opening[0]))
-                if (match_op_hash in opening):
+                if match_op_hash in opening and current_frame_num - op_bg_num > 100:
                     if(op_match_times == 0):
                         # print(str(current_frame_num) + " | 开场白起点")
                         op_bg_num = current_frame_num
-                        add_op(frame_rate,op_bg_num,newOP)
-                    op = bool(1 - op)
+                        add_op(frame_rate, op_bg_num, opType)
+                    op = not op
                     op_match_times += 1
                     if (op_match_times == 2):
                         # print(str(current_frame_num) + " | 开场白结束")

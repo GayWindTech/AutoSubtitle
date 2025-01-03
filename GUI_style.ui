@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>635</width>
-    <height>204</height>
+    <height>205</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -152,9 +152,9 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>360</x>
-      <y>10</y>
-      <width>251</width>
+      <x>230</x>
+      <y>40</y>
+      <width>141</width>
       <height>21</height>
      </rect>
     </property>
@@ -191,20 +191,38 @@
      <string>默认</string>
     </property>
    </widget>
-   <widget class="QCheckBox" name="FlagNewOPcheckBox">
+   <widget class="QComboBox" name="FlagOPcomboBox">
     <property name="geometry">
      <rect>
-      <x>510</x>
-      <y>11</y>
-      <width>101</width>
-      <height>20</height>
+      <x>530</x>
+      <y>10</y>
+      <width>71</width>
+      <height>22</height>
      </rect>
     </property>
-    <property name="text">
-     <string>Flag系列新OP</string>
-    </property>
-    <property name="checked">
+   </widget>
+   <widget class="QLabel" name="Title_3">
+    <property name="enabled">
      <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>370</x>
+      <y>10</y>
+      <width>151</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>等线</family>
+      <pointsize>11</pointsize>
+      <stylestrategy>PreferDefault</stylestrategy>
+      <kerning>true</kerning>
+     </font>
+    </property>
+    <property name="text">
+     <string>请选择Flag系列OP类型</string>
     </property>
    </widget>
   </widget>
@@ -334,22 +352,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>FlagNewOPcheckBox</sender>
-   <signal>stateChanged(int)</signal>
-   <receiver>AutoSubtitle</receiver>
-   <slot>updateOPstyle()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>584</x>
-     <y>27</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>624</x>
-     <y>4</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>OpenFilePathEdit</sender>
    <signal>dropAccepted()</signal>
    <receiver>AutoSubtitle</receiver>
@@ -362,6 +364,22 @@
     <hint type="destinationlabel">
      <x>293</x>
      <y>47</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>FlagOPcomboBox</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>AutoSubtitle</receiver>
+   <slot>updateOPstyle()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>594</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>618</x>
+     <y>20</y>
     </hint>
    </hints>
   </connection>

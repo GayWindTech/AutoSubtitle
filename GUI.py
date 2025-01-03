@@ -3,7 +3,7 @@ import sys
 from pathlib import Path
 
 from PyQt6 import QtWidgets
-from PyQt6.QtWidgets import QFileDialog, QMessageBox, QLineEdit
+from PyQt6.QtWidgets import QFileDialog, QLineEdit, QMessageBox
 
 from GUI_style import Ui_AutoSubtitle
 from verifyPath import is_path_exists_or_creatable
@@ -17,12 +17,15 @@ class AutoSubtitle_class(QtWidgets.QMainWindow, Ui_AutoSubtitle):
         self.videoTypeList.addItems(["全力回避Flag酱","混血万事屋"])
         self.videoType = self.videoTypeList.currentIndex()
         self.finish = False
-        self.newOP = True
-        
+        self.opTpyes = ["远古OP", "旧OP", "新OP-长", "新OP-短"]
+        self.opTpye = 2
+        self.FlagOPcomboBox.addItems(self.opTpyes)
+        self.FlagOPcomboBox.setCurrentIndex(2)
+
     def closeEvent(self, event):
         if(not self.finish):
             sys.exit()
-        
+
     def updateOpenPath(self):
         path = self.OpenFilePathEdit.text()
         if (Path(path).is_file() == False):
@@ -42,13 +45,13 @@ class AutoSubtitle_class(QtWidgets.QMainWindow, Ui_AutoSubtitle):
                 self.openPath=path
             else:
                 self.OpenFilePathEdit.clear()
-    
+
     def setSavePathToDefault(self):
         path = self.openPath
         defaultSavePath = str(path).rstrip(str(path).split('.')[-1])+"ass" if path != '' else os.path.join(os.getcwd(), 'out.ass')
         self.SaveFilePathEdit.setText(defaultSavePath)
         self.updateSavePath()
-    
+
     def updateSavePath(self):
         path = self.SaveFilePathEdit.text()
         if (is_path_exists_or_creatable(path) == False):
@@ -57,21 +60,21 @@ class AutoSubtitle_class(QtWidgets.QMainWindow, Ui_AutoSubtitle):
         else:
             print(f"将会保存至: {path}")
             self.savePath=path
-            
+
     def updateVideoType(self):
         self.videoType = self.videoTypeList.currentIndex()
         if(self.videoType == 0):
-            self.FlagNewOPcheckBox.setEnabled(True)
+            self.FlagOPcomboBox.setEnabled(True)
         else:
-            self.FlagNewOPcheckBox.setEnabled(False)
+            self.FlagOPcomboBox.setEnabled(False)
         print(f'当前视频类型: {str(self.videoType)}')
-            
+
     def raiseOpenFile(self): 
         filePath,openStatus=QFileDialog.getOpenFileName(self,'选择要打开的文件') 
         if openStatus: 
             self.OpenFilePathEdit.setText(filePath)
             self.updateOpenPath()
-            
+
     def raiseSaveFile(self): 
         path = self.openPath
         defaultSavePath = os.path.basename(path).rstrip(str(path).split('.')[-1])+"ass" if path != '' else 'out.ass'
@@ -79,14 +82,14 @@ class AutoSubtitle_class(QtWidgets.QMainWindow, Ui_AutoSubtitle):
         if openStatus: 
             self.SaveFilePathEdit.setText(filePath)
             self.updateSavePath()
-            
+
     def checkForm(self,path:str):
         return path.split('.')[-1] in ["webm","mp4","mov","flv","mkv","m4v"]
 
     def updateOPstyle(self):
-        self.newOP = self.FlagNewOPcheckBox.isChecked()
-        print(f'NewOP: {str(self.newOP)}')
-    
+        self.opTpye = self.FlagOPcomboBox.currentIndex()
+        print(f"opType: {self.opTpyes[self.opTpye]}")
+
     def tryToStart(self):
         self.updateOpenPath()
         self.updateSavePath()
@@ -105,7 +108,12 @@ def runGUI():
     GUI_mainWindow.setFixedSize(GUI_mainWindow.width(), GUI_mainWindow.height())
     GUI_mainWindow.show()
     GUI_APP.exec()
-    return GUI_mainWindow.openPath,GUI_mainWindow.savePath,GUI_mainWindow.videoType,GUI_mainWindow.newOP
+    return (
+        GUI_mainWindow.openPath,
+        GUI_mainWindow.savePath,
+        GUI_mainWindow.videoType,
+        GUI_mainWindow.opTpye,
+    )
 
 if __name__ == "__main__":
     print(runGUI())
