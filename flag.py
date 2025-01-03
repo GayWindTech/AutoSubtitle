@@ -15,7 +15,7 @@ opening_newnew1 = [
 ]
 opening_newnew2 = [
     "1010101010101100010101010011010100110101100100001010100010001000",
-    "1011100111011000101101000001011000010010001010001000110100100010",
+    "1010100111011000111000001000011100000111001000001000110000000010",
 ]
 
 openings = [opening_old, opening_new, opening_newnew1, opening_newnew2]
@@ -450,13 +450,21 @@ def autosub(videopath, subpath, opType):
             switch_hash = phash(frame[940:1060, 360:1540])
 
             # match_op_hash = phash(frame)
-            # if current_frame_num == 575:
+            # if current_frame_num == 137:
             #     print(match_op_hash)
             #     print(hamming_distance(match_op_hash, opening[0]))
-            # if current_frame_num == 981:
+            #     cv2.imshow("frame", frame)
+            #     while True:
+            #         if cv2.waitKey(1) & 0xFF == ord("q"):
+            #             break
+            # if current_frame_num == 234:
             #     print(match_op_hash)
             #     print(hamming_distance(match_op_hash, opening[0]))
             #     print(hamming_distance(match_op_hash, opening[1]))
+            #     cv2.imshow("frame", frame)
+            #     while True:
+            #         if cv2.waitKey(1) & 0xFF == ord("q"):
+            #             break
             #     exit()
             if (op_match_times < 2):
                 match_op_hash = phash(frame)
@@ -466,13 +474,16 @@ def autosub(videopath, subpath, opType):
                     op_match_times == 0
                     and hamming_distance(match_op_hash, opening[0]) < 3
                 ):
-                    if(op_match_times == 0):
+                    op = not op
+                    op_match_times += 1
+                    if op_match_times == 1:
                         # print(str(current_frame_num) + " | 开场白起点")
                         op_bg_num = current_frame_num
                         add_op(frame_rate, op_bg_num, opType)
-                    op = not op
-                    op_match_times += 1
-                    if (op_match_times == 2):
+                        for _ in range(int(frame_rate * 4)):
+                            source_video.read()
+                            current_frame_num += 1
+                    if op_match_times == 2:
                         # print(str(current_frame_num) + " | 开场白结束")
                         print(f'{str(op_bg_num)} <-> {str(current_frame_num)} | 开场白')
                     begin_frame_num = last_frame_num = current_frame_num + 15
