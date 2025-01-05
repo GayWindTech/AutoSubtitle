@@ -470,9 +470,16 @@ def autosub(videopath, subpath, opType):
                 match_op_hash = phash(frame)
                 # print(match_op_hash)
                 # print(hamming_distance(match_op_hash,opening[0]))
-                if match_op_hash in opening or (
-                    op_match_times == 0
-                    and hamming_distance(match_op_hash, opening[0]) < 3
+                if (
+                    match_op_hash in opening
+                    or (
+                        op_match_times == 0
+                        and hamming_distance(match_op_hash, opening[0]) < 3
+                    )
+                    or (
+                        op_match_times == 1
+                        and hamming_distance(match_op_hash, opening[1]) < 3
+                    )
                 ):
                     op = not op
                     op_match_times += 1
